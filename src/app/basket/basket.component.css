@@ -1,0 +1,9 @@
+.table-responsive {
+    overflow-x: auto;
+}
+
+.btn-outline-warning {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

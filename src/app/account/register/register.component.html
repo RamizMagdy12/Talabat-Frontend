@@ -1,0 +1,75 @@
+<div class="d-flex justify-content-center mt-5">
+    <div class="col-4">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="text-center mb-4">
+                <h1 class="h3 mb-3 fw-normal">Register</h1>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" formControlName="displayName"
+                    [ngClass]="(registerForm.get('displayName')?.touched) ? registerForm.get('displayName')?.invalid ? 'is-invalid' : 'is-valid' : ''"
+                    id="floatingDisplayName" placeholder="Display Name">
+                <label for="floatingDisplayName">Display Name</label>
+                <div class="invalid-feedback" *ngIf="registerForm.get('displayName')?.hasError('required')">
+                    Display Name is required
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" formControlName="userName"
+                    [ngClass]="(registerForm.get('userName')?.touched) ? registerForm.get('userName')?.invalid ? 'is-invalid' : 'is-valid' : ''"
+                    id="floatingUserName" placeholder="Username">
+                <label for="floatingUserName">Username</label>
+                <div class="invalid-feedback" *ngIf="registerForm.get('userName')?.hasError('required')">
+                    Username is required
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" formControlName="email"
+                    [ngClass]="(registerForm.get('email')?.touched) ? registerForm.get('email')?.invalid ? 'is-invalid' : 'is-valid' : ''"
+                    id="floatingEmail" placeholder="name@example.com">
+                <label for="floatingEmail">Email address</label>
+                <div class="invalid-feedback" *ngIf="registerForm.get('email')?.hasError('required')">
+                    Email address is required
+                </div>
+                <div class="invalid-feedback" *ngIf="registerForm.get('email')?.hasError('email')">
+                    Invalid email address
+                </div>
+                <div class="invalid-feedback" *ngIf="registerForm.get('email')?.hasError('emailExists')">
+                    Email address is already taken
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" formControlName="phoneNumber"
+                    [ngClass]="(registerForm.get('phoneNumber')?.touched) ? registerForm.get('phoneNumber')?.invalid ? 'is-invalid' : 'is-valid' : ''"
+                    id="floatingPhoneNumber" placeholder="Phone Number">
+                <label for="floatingPhoneNumber">Phone Number</label>
+                <div class="invalid-feedback" *ngIf="registerForm.get('phoneNumber')?.hasError('required')">
+                    Phone Number is required
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" formControlName="password"
+                    [ngClass]="(registerForm.get('password')?.touched) ? registerForm.get('password')?.invalid ? 'is-invalid' : 'is-valid' : ''"
+                    id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+                <div class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('required')">
+                    Password is required
+                </div>
+                <div class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('pattern')">
+                    Password must contain at least 1 uppercase, 1 lowercase, 1 number, 1 non-alphanumeric and be at
+                    least 6 characters.
+                </div>
+            </div>
+
+            <button [disabled]="registerForm.invalid || registerForm.pending" class="w-100 btn btn-lg btn-primary"
+                type="submit">Sign up</button>
+            <div class="mt-3 text-center">
+                <p>Already have an account? <a routerLink="/account/login">Login</a></p>
+            </div>
+        </form>
+    </div>
+</div>

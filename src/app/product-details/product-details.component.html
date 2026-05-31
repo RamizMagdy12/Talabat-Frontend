@@ -1,0 +1,29 @@
+<div class="container mt-4" *ngIf="product; else loading">
+    <div class="details-card">
+        <div class="image-container">
+            <img [src]="product.pictureUrl" [alt]="product.name" class="main-image" />
+        </div>
+        <div class="info-container">
+            <h2>{{ product.name }}</h2>
+            <h3 class="price">{{ product.price | currency }}</h3>
+            <div class="badges">
+                <span class="badge">{{ product.brand }}</span>
+                <span class="badge">{{ product.category }}</span>
+            </div>
+            <p class="description">{{ product.description }}</p>
+            <div class="d-flex gap-2 mt-3">
+                <button (click)="addItemToBasket()" class="btn btn-primary flex-grow-1 header-btn">
+                    Add to Cart
+                </button>
+                <button [routerLink]="['/products']" class="btn btn-outline-secondary header-btn">
+                    Back to Products
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #loading>
+    <div class="container mt-4">
+        <p>Loading product details...</p>
+    </div>
+</ng-template>

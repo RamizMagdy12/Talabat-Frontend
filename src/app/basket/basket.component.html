@@ -1,0 +1,103 @@
+<div class="container mt-5">
+    <div *ngIf="(basketService.basketSource$ | async) === null">
+        <p>There are no items in your basket.</p>
+    </div>
+
+    <div *ngIf="basketService.basketSource$ | async as basket">
+        <div class="pb-5">
+            <div class="row">
+                <div class="col-12 py-5 mb-1">
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th scope="col" class="border-0">
+                                        <div class="p-2 px-3 text-uppercase">Product</div>
+                                    </th>
+                                    <th scope="col" class="border-0">
+                                        <div class="py-2 text-uppercase">Price</div>
+                                    </th>
+                                    <th scope="col" class="border-0 text-center">
+                                        <div class="py-2 text-uppercase">Quantity</div>
+                                    </th>
+                                    <th scope="col" class="border-0">
+                                        <div class="py-2 text-uppercase">Total</div>
+                                    </th>
+                                    <th scope="col" class="border-0 text-center">
+                                        <div class="py-2 text-uppercase">Remove</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of basket.items">
+                                    <th scope="row" class="border-0">
+                                        <div class="d-flex align-items-center p-2">
+                                            <img src="{{item.productUrl}}" alt="{{item.productName}}"
+                                                class="img-fluid rounded shadow-sm"
+                                                style="max-height: 50px; width: 50px; object-fit: cover;">
+                                            <div class="ms-3 d-inline-block align-middle">
+                                                <h5 class="mb-0">
+                                                    <a routerLink="/products/{{item.id}}"
+                                                        class="text-dark d-inline-block">{{item.productName}}</a>
+                                                </h5>
+                                                <span class="text-muted font-weight-normal font-italic d-block">Type:
+                                                    {{item.category}}</span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <td class="border-0"><strong>{{item.price | currency}}</strong></td>
+                                    <td class="border-0">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <button (click)="decrementQuantity(item)"
+                                                class="btn btn-sm btn-outline-warning me-2 fw-bold"
+                                                style="width: 32px; height: 32px;">-</button>
+                                            <span class="fw-bold px-2"
+                                                style="font-size: 1.2rem;">{{item.quantity}}</span>
+                                            <button (click)="incrementQuantity(item)"
+                                                class="btn btn-sm btn-outline-warning ms-2 fw-bold"
+                                                style="width: 32px; height: 32px;">+</button>
+                                        </div>
+                                    </td>
+                                    <td class="border-0"><strong>{{(item.price * item.quantity) | currency}}</strong>
+                                    </td>
+                                    <td class="border-0 text-center">
+                                        <button (click)="removeItem(item)" class="btn btn-outline-danger btn-sm">
+                                            Remove
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6 offset-6">
+                    <div *ngIf="basketService.basketTotalSource$ | async as basketTotals">
+                        <div class="bg-light rounded p-4">
+                            <ul class="list-unstyled mb-4">
+                                <li class="d-flex justify-content-between py-3 border-bottom">
+                                    <strong class="text-muted">Order subtotal </strong>
+                                    <strong>{{basketTotals.subtotal | currency}}</strong>
+                                </li>
+                                <li class="d-flex justify-content-between py-3 border-bottom">
+                                    <strong class="text-muted">Shipping and handling</strong>
+                                    <strong>{{basketTotals.shipping | currency}}</strong>
+                                </li>
+                                <li class="d-flex justify-content-between py-3 border-bottom">
+                                    <strong class="text-dark border-top pt-2 mt-2">Total</strong>
+                                    <strong class="text-dark border-top pt-2 mt-2">{{basketTotals.total |
+                                        currency}}</strong>
+                                </li>
+                            </ul>
+                            <a routerLink="/checkout" class="btn btn-primary rounded-pill py-2 btn-block w-100">
+                                Proceed to checkout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
