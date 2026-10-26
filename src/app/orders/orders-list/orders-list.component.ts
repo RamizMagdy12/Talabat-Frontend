@@ -40,38 +40,41 @@ export class OrdersListComponent implements OnInit {
             next: (orders) => {
                 this.orders = orders;
                 this.isLoading = false;
-                console.log('Orders loaded:', orders);
             },
-            error: (err) => {
-                console.error('Failed to load orders', err);
+            error: () => {
                 this.isLoading = false;
             }
         });
     }
 
     getStatusClass(status: any): string {
-        switch (status) {
-            case 0: return 'status--pending';
+        switch (Number(status)) {
             case 1: return 'status--success';
             case 2: return 'status--failed';
+            case 3: return 'status--prep';
+            case 4: return 'status--ship';
+            case 5: return 'status--delivered';
             default: return 'status--pending';
         }
     }
 
     getStatusIcon(status: any): string {
-        switch (status) {
-            case 0: return 'clock';
-            case 1: return 'check';
+        switch (Number(status)) {
+            case 1:
+            case 5: return 'check';
             case 2: return 'x';
             default: return 'clock';
         }
     }
 
     getStatusText(status: any): string {
-        switch (status) {
+        switch (Number(status)) {
             case 0: return 'Pending';
             case 1: return 'Payment Received';
             case 2: return 'Payment Failed';
+            case 3: return 'Preparing';
+            case 4: return 'Out For Delivery';
+            case 5: return 'Delivered';
             default: return 'Pending';
         }
     }

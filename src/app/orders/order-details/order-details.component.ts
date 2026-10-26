@@ -28,43 +28,53 @@ export class OrderDetailsComponent implements OnInit {
                 next: (order) => {
                     this.order = order;
                     this.isLoading = false;
-                    console.log('Order loaded:', order);
                 },
-                error: (err) => {
-                    console.error('Failed to load order', err);
+                error: () => {
                     this.isLoading = false;
                 }
             });
         } else {
-            console.error('Missing order id', { id });
             this.isLoading = false;
         }
     }
 
     getStatusClass(status: any): string {
-        switch (status) {
-            case 0: return 'status--pending';
+        switch (Number(status)) {
             case 1: return 'status--success';
             case 2: return 'status--failed';
+            case 3: return 'status--prep';
+            case 4: return 'status--ship';
+            case 5: return 'status--delivered';
             default: return 'status--pending';
         }
     }
 
+    /** Timeline step index 1..5 for happy path; PaymentFailed stays at payment step. */
     getStepProgress(status: any): number {
-        switch (status) {
-            case 0: return 1;
-            case 1: return 3;
-            case 2: return 2;
+        switch (Number(status)) {
+            case 0: return 1; // Pending / placed
+            case 2: return 2; // Payment failed
+            case 1: return 2; // Payment received
+            case 3: return 3; // Preparing
+            case 4: return 4; // Out for delivery
+            case 5: return 5; // Delivered
             default: return 1;
         }
     }
 
     getStatusText(status: any): string {
-        switch (status) {
+        switch (Number(status)) {
             case 0: return 'Pending';
             case 1: return 'Payment Received';
             case 2: return 'Payment Failed';
+            case 3: return 'Preparing';
+            case 4: return 'Out For Delivery';
+            case 5: return 'Delivered';
             default: return 'Pending';
         }
+    }
+
+    isFailed(status: any): boolean {
+        return Number(status) === 2;
     }
 }

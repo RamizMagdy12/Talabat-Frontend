@@ -97,7 +97,7 @@
                 <div *ngFor="let method of deliveryMethods"
                      class="delivery-card"
                      [class.selected]="selectedDeliveryMethodId === method.id"
-                     (click)="selectedDeliveryMethodId = method.id">
+                     (click)="onDeliveryMethodSelected(method.id)">
                     <div class="delivery-radio">
                         <div class="radio-outer">
                             <div class="radio-inner" *ngIf="selectedDeliveryMethodId === method.id"></div>
