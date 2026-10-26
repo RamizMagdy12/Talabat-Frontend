@@ -111,7 +111,7 @@ src/
 
 ## 🔌 API Integration
 
-The frontend communicates with the Talabat API at `https://localhost:7099/api/`. All authenticated requests rely on the JWT interceptor—**no email is ever sent as a query parameter**.
+The frontend communicates with the Talabat API at `https://taalaabat.runasp.net/api/`. All authenticated requests rely on the JWT interceptor—**no email is ever sent as a query parameter**.
 
 ```typescript
 // order.service.ts — buyer identity resolved server-side from JWT
@@ -141,7 +141,7 @@ Step 4  →  confirmCardPayment() → POST /api/orders → basket cleared → re
 
 - [Node.js](https://nodejs.org/) 18+ and npm
 - [Angular CLI](https://angular.dev/tools/cli) 20+
-- Talabat API running at `https://localhost:7099`
+- Talabat API running at `https://taalaabat.runasp.net`
 
 ### 1. Clone the Repository
 
@@ -163,7 +163,7 @@ Update `src/environments/environment.ts`:
 ```typescript
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost:7099/api/',
+  apiUrl: 'https://taalaabat.runasp.net/api/',
   stripePublishableKey: 'pk_test_your_stripe_publishable_key'
 };
 ```

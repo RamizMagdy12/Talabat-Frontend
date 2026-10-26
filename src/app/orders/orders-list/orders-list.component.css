@@ -285,6 +285,21 @@
     border: 1px solid #a7f3d0;
 }
 
+.status--prep {
+    background: #e7f5ff;
+    color: #1864ab;
+}
+
+.status--ship {
+    background: #fff0f6;
+    color: #a61e4d;
+}
+
+.status--delivered {
+    background: #ebfbee;
+    color: #2b8a3e;
+}
+
 .status--failed {
     background: var(--red-light);
     color: var(--red);

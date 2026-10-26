@@ -34,7 +34,7 @@ export class App implements OnInit {
 
     this.accountService.loadCurrentUser(token).subscribe({
       next: () => console.log('loaded user'),
-      error: error => console.log(error)
+      error: (error: unknown) => console.log(error)
     });
   }
 
