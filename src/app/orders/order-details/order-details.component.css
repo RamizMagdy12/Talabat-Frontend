@@ -112,6 +112,35 @@
     border: 1px solid #fecaca;
 }
 
+.status--prep {
+    background: #e7f5ff;
+    color: #1864ab;
+    border: 1px solid #a5d8ff;
+}
+
+.status--ship {
+    background: #fff0f6;
+    color: #a61e4d;
+    border: 1px solid #fcc2d7;
+}
+
+.status--delivered {
+    background: #ebfbee;
+    color: #2b8a3e;
+    border: 1px solid #b2f2bb;
+}
+
+.timeline--full {
+    flex-wrap: wrap;
+    gap: 8px 0;
+}
+
+.timeline--full .timeline-label {
+    font-size: 0.72rem;
+    text-align: center;
+    max-width: 72px;
+}
+
 .order-date {
     font-size: 0.88rem;
     color: var(--text-muted);

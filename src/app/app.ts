@@ -14,11 +14,12 @@ import { AccountService } from './account/account.service';
 export class App implements OnInit {
   protected readonly title = signal('TalabatAngular');
 
-  constructor(public basketService: BasketService, public accountService: AccountService) { }
+  constructor(public basketService: BasketService, public accountService: AccountService) {
+    // Restore auth before initial route guards run
+    this.loadCurrentUser();
+  }
 
   ngOnInit(): void {
-    this.loadCurrentUser();
-
     const basketId = localStorage.getItem('basket_id');
     if (basketId) {
       this.basketService.getBasket(basketId).subscribe({

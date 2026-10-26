@@ -21,7 +21,7 @@ export class BasketService {
     constructor(private http: HttpClient, private router: Router) { }
 
     getBasket(id: string) {
-        return this.http.get<Basket>(this.baseUrl + 'basket?basketId=' + id).pipe(
+        return this.http.get<Basket>(this.baseUrl + 'basket?basketid=' + id).pipe(
             map((basket: Basket) => {
                 this.basketSource.next(basket);
                 this.calculateTotals();
@@ -42,6 +42,18 @@ export class BasketService {
 
     getCurrentBasketValue() {
         return this.basketSource.value;
+    }
+
+    setLocalBasket(basket: Basket) {
+        this.basketSource.next(basket);
+        this.calculateTotals();
+    }
+
+    setDeliveryMethodId(deliveryMethodId: number) {
+        const basket = this.getCurrentBasketValue();
+        if (!basket) return;
+        basket.deliveryMethodId = deliveryMethodId;
+        return this.setBasket(basket);
     }
 
     addItemToBasket(item: Product | BasketItem, quantity = 1) {

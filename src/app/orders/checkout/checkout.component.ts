@@ -148,6 +148,22 @@ private mountStripeCard(): void {
             });
             return;
         }
+        if (this.currentStep === 2) {
+            // Persist delivery method, then create a fresh PaymentIntent for the correct amount
+            this.clientSecret = '';
+            this.paymentIntentId = '';
+            this.basketService.setDeliveryMethodId(this.selectedDeliveryMethodId)?.subscribe({
+                next: () => {
+                    this.currentStep = 3;
+                    this.createPaymentIntent();
+                },
+                error: () => {
+                    this.currentStep = 3;
+                    this.createPaymentIntent();
+                }
+            });
+            return;
+        }
         if (this.currentStep < 4) {
             this.currentStep++;
 
@@ -156,6 +172,14 @@ private mountStripeCard(): void {
                 this.createPaymentIntent();
             }
         }
+    }
+
+    onDeliveryMethodSelected(methodId: number): void {
+        this.selectedDeliveryMethodId = methodId;
+        this.basketService.setDeliveryMethodId(methodId)?.subscribe();
+        // Amount changed — recreate PaymentIntent on next payment step
+        this.clientSecret = '';
+        this.paymentIntentId = '';
     }
 
     prevStep(): void {
@@ -235,10 +259,16 @@ private createPaymentIntent(): void {
 
         if (error) {
             this.isSubmitting = false;
+            // Stale/succeeded PaymentIntent — force a new one on retry
+            if (error.code === 'payment_intent_unexpected_state' || error.code === 'processing_error') {
+                this.clientSecret = '';
+                this.paymentIntentId = '';
+                this.cardComplete = false;
+            }
             Swal.fire({
                 icon: 'error',
                 title: 'Payment Failed',
-                text: error.message,
+                text: error.message || 'A processing error occurred. Please go back to Payment and try again.',
                 confirmButtonColor: '#e94560'
             });
             return;

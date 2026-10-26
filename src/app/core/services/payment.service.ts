@@ -20,7 +20,7 @@ export class PaymentService {
         }
         return this.http.post<Basket>(this.baseUrl + 'payments/' + basket.id, {}).pipe(
             map((updatedBasket: Basket) => {
-                this.basketService.basketSource$.subscribe(); // keep basket in sync
+                this.basketService.setLocalBasket(updatedBasket);
                 return updatedBasket;
             })
         );
