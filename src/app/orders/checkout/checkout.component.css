@@ -302,6 +302,38 @@
     margin: 4px 0 0;
 }
 
+.address-hint {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 14px 0 4px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid color-mix(in srgb, var(--brand) 22%, #e8e4de);
+    background: color-mix(in srgb, var(--brand) 8%, #fff);
+    color: var(--text);
+    font-size: 0.86rem;
+    line-height: 1.45;
+}
+
+.address-hint svg {
+    color: var(--brand);
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.address-hint a {
+    display: inline-block;
+    margin-inline-start: 6px;
+    color: var(--brand);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.address-hint a:hover {
+    text-decoration: underline;
+}
+
 /* ═══════════════════════════════
    FORM
 ═══════════════════════════════ */

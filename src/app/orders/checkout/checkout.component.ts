@@ -40,7 +40,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         lastName: '',
         street: '',
         city: '',
-        country: ''
+        country: '',
+        phoneNumber: ''
     };
     addressFromProfile = false;
 
@@ -67,17 +68,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.accountService.getProfile().subscribe({
             next: (profile) => {
                 const saved = profile.address;
-                if (!saved) return;
-
-                const hasAddress = !!(saved.firstName || saved.lastName || saved.street || saved.city || saved.country);
-                if (!hasAddress) return;
+                const phone = profile.phoneNumber || '';
+                const hasAddress = !!(saved && (saved.firstName || saved.lastName || saved.street || saved.city || saved.country));
+                if (!hasAddress && !phone) return;
 
                 this.address = {
-                    firstName: saved.firstName || '',
-                    lastName: saved.lastName || '',
-                    street: saved.street || '',
-                    city: saved.city || '',
-                    country: saved.country || ''
+                    firstName: saved?.firstName || '',
+                    lastName: saved?.lastName || '',
+                    street: saved?.street || '',
+                    city: saved?.city || '',
+                    country: saved?.country || '',
+                    phoneNumber: phone
                 };
                 this.addressFromProfile = true;
             },
@@ -157,8 +158,19 @@ private mountStripeCard(): void {
         return this.basketSubtotal + this.deliveryCost;
     }
 
+    onAddressEdited(): void {
+        this.addressFromProfile = false;
+    }
+
     isAddressValid(): boolean {
-        return !!(this.address.firstName && this.address.lastName && this.address.street && this.address.city && this.address.country);
+        return !!(
+            this.address.firstName &&
+            this.address.lastName &&
+            this.address.street &&
+            this.address.city &&
+            this.address.country &&
+            this.address.phoneNumber
+        );
     }
 
     nextStep(): void {

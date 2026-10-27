@@ -219,6 +219,10 @@
                         {{order.shippingAddress.lastName}}
                     </p>
 
+                    <p *ngIf="order.shippingAddress.phoneNumber">
+                        {{order.shippingAddress.phoneNumber}}
+                    </p>
+
                     <p>
                         {{order.shippingAddress.street}}
                     </p>

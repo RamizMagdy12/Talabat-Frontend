@@ -23,6 +23,7 @@ export interface IShippingAddress {
     street: string;
     city: string;
     country: string;
+    phoneNumber: string;
 }
 
 export interface IOrderItem {
