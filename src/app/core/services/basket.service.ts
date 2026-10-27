@@ -59,12 +59,14 @@ export class BasketService {
     addItemToBasket(item: Product | BasketItem, quantity = 1) {
         const token = localStorage.getItem('token');
         if (!token) {
-            Swal.fire({
+            void Swal.fire({
                 icon: 'warning',
-                title: 'Unauthenticated',
+                title: 'Sign in required',
                 text: 'You must be logged in to add items to your cart.',
                 confirmButtonText: 'Go to Login',
-                showCancelButton: true
+                cancelButtonText: 'Cancel',
+                showCancelButton: true,
+                allowOutsideClick: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     this.router.navigateByUrl('/account/login');
@@ -81,11 +83,13 @@ export class BasketService {
         this.setBasket(basket).subscribe({
             next: () => {
                 Swal.fire({
-                    position: 'bottom-end',
+                    toast: true,
+                    position: 'top-end',
                     icon: 'success',
                     title: 'Item added to your cart',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 1800,
+                    timerProgressBar: true
                 });
             }
         });
@@ -120,13 +124,12 @@ export class BasketService {
         if (!basket) return;
         if (basket.items.some(x => x.id === item.id)) {
             Swal.fire({
-                title: 'Are you sure?',
-                text: "Do you want to remove this item from the cart?",
+                title: 'Remove item?',
+                text: 'Do you want to remove this item from the cart?',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, remove it!'
+                confirmButtonText: 'Yes, remove it',
+                cancelButtonText: 'Keep it'
             }).then((result) => {
                 if (result.isConfirmed) {
                     basket.items = basket.items.filter(i => i.id !== item.id);

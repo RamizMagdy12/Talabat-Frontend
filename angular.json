@@ -27,6 +27,7 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "node_modules/sweetalert2/dist/sweetalert2.min.css",
               "src/styles.css"
             ],
             "scripts": [
@@ -43,8 +44,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "20kB",
-                  "maximumError": "40kB"
+                  "maximumWarning": "40kB",
+                  "maximumError": "80kB"
                 }
               ],
               "outputHashing": "all"

@@ -1,9 +1,240 @@
-.table-responsive {
-    overflow-x: auto;
+.basket-page {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1.5rem 0 3rem;
+  animation: riseIn 0.45s ease both;
 }
 
-.btn-outline-warning {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.shop-kicker {
+  margin: 0 0 0.3rem;
+  color: var(--brand);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.basket-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.basket-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+  letter-spacing: -0.03em;
+}
+
+.basket-empty {
+  text-align: center;
+  background: #fff;
+  border: 1px dashed var(--line);
+  border-radius: 20px;
+  padding: 3rem 1.25rem;
+}
+
+.basket-empty h2 {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+}
+
+.basket-empty p {
+  margin: 0 0 1.1rem;
+  color: var(--muted);
+}
+
+.basket-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.basket-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.basket-item {
+  display: grid;
+  grid-template-columns: 72px 1fr auto auto;
+  gap: 0.85rem;
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 0.85rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.basket-item img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #f7f8fb;
+}
+
+.basket-item__info {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.basket-item__name {
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.basket-item__meta {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.basket-item__price {
+  color: var(--brand-deep);
+  font-size: 0.92rem;
+}
+
+.basket-item__qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.2rem;
+  background: #f7f8fb;
+}
+
+.basket-item__qty button {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.basket-item__qty span {
+  min-width: 1.5rem;
+  text-align: center;
+  font-weight: 800;
+}
+
+.basket-item__total {
+  display: grid;
+  justify-items: end;
+  gap: 0.35rem;
+}
+
+.link-danger {
+  border: 0;
+  background: transparent;
+  color: var(--danger);
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.basket-summary {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 1.15rem;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: calc(var(--nav-h) + 12px);
+}
+
+.basket-summary h2 {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 0;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--line);
+}
+
+.summary-row--total {
+  border-bottom: 0;
+  color: var(--ink);
+  font-size: 1.05rem;
+  padding-top: 0.9rem;
+}
+
+.btn-solid,
+.btn-ghost {
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border-radius: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.btn-solid {
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(255, 77, 0, 0.22);
+}
+
+.btn-ghost {
+  background: #fff;
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.btn-block {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+  .basket-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .basket-summary {
+    position: static;
+  }
+}
+
+@media (max-width: 680px) {
+  .basket-page {
+    width: min(100% - 1.25rem, 1100px);
+  }
+
+  .basket-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .basket-item {
+    grid-template-columns: 64px 1fr;
+    grid-template-areas:
+      "img info"
+      "qty total";
+  }
+
+  .basket-item img { grid-area: img; }
+  .basket-item__info { grid-area: info; }
+  .basket-item__qty { grid-area: qty; justify-self: start; }
+  .basket-item__total { grid-area: total; }
 }

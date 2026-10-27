@@ -1,75 +1,77 @@
-<div class="d-flex justify-content-center mt-5">
-    <div class="col-4">
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            <div class="text-center mb-4">
-                <h1 class="h3 mb-3 fw-normal">Register</h1>
-            </div>
+<section class="auth-stage">
+  <div class="auth-orb auth-orb--a" aria-hidden="true"></div>
+  <div class="auth-orb auth-orb--b" aria-hidden="true"></div>
+  <div class="auth-orb auth-orb--c" aria-hidden="true"></div>
+  <div class="auth-grid" aria-hidden="true"></div>
 
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" formControlName="displayName"
-                    [ngClass]="(registerForm.get('displayName')?.touched) ? registerForm.get('displayName')?.invalid ? 'is-invalid' : 'is-valid' : ''"
-                    id="floatingDisplayName" placeholder="Display Name">
-                <label for="floatingDisplayName">Display Name</label>
-                <div class="invalid-feedback" *ngIf="registerForm.get('displayName')?.hasError('required')">
-                    Display Name is required
-                </div>
-            </div>
+  <div class="auth-layout auth-layout--register">
+    <aside class="auth-brand panel-in">
+      <div class="auth-brand__mark">T</div>
+      <h1 class="auth-brand__title">Talabat</h1>
+      <p class="auth-brand__tag">Create your account and start ordering in minutes.</p>
+    </aside>
 
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" formControlName="userName"
-                    [ngClass]="(registerForm.get('userName')?.touched) ? registerForm.get('userName')?.invalid ? 'is-invalid' : 'is-valid' : ''"
-                    id="floatingUserName" placeholder="Username">
-                <label for="floatingUserName">Username</label>
-                <div class="invalid-feedback" *ngIf="registerForm.get('userName')?.hasError('required')">
-                    Username is required
-                </div>
-            </div>
+    <div class="auth-card panel-in panel-in--delay">
+      <div class="auth-card__head">
+        <h2>Join Talabat</h2>
+        <p>One account for shopping, checkout, and order tracking.</p>
+      </div>
 
-            <div class="form-floating mb-3">
-                <input type="email" class="form-control" formControlName="email"
-                    [ngClass]="(registerForm.get('email')?.touched) ? registerForm.get('email')?.invalid ? 'is-invalid' : 'is-valid' : ''"
-                    id="floatingEmail" placeholder="name@example.com">
-                <label for="floatingEmail">Email address</label>
-                <div class="invalid-feedback" *ngIf="registerForm.get('email')?.hasError('required')">
-                    Email address is required
-                </div>
-                <div class="invalid-feedback" *ngIf="registerForm.get('email')?.hasError('email')">
-                    Invalid email address
-                </div>
-                <div class="invalid-feedback" *ngIf="registerForm.get('email')?.hasError('emailExists')">
-                    Email address is already taken
-                </div>
-            </div>
+      <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="field-row">
+          <label class="field">
+            <span>Display name</span>
+            <input type="text" formControlName="displayName" placeholder="Your name"
+              [class.is-invalid]="registerForm.get('displayName')?.touched && registerForm.get('displayName')?.invalid" />
+            <small class="field-error" *ngIf="registerForm.get('displayName')?.touched && registerForm.get('displayName')?.hasError('required')">Required</small>
+          </label>
+          <label class="field">
+            <span>Username</span>
+            <input type="text" formControlName="userName" placeholder="username"
+              [class.is-invalid]="registerForm.get('userName')?.touched && registerForm.get('userName')?.invalid" />
+            <small class="field-error" *ngIf="registerForm.get('userName')?.touched && registerForm.get('userName')?.hasError('required')">Required</small>
+          </label>
+        </div>
 
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" formControlName="phoneNumber"
-                    [ngClass]="(registerForm.get('phoneNumber')?.touched) ? registerForm.get('phoneNumber')?.invalid ? 'is-invalid' : 'is-valid' : ''"
-                    id="floatingPhoneNumber" placeholder="Phone Number">
-                <label for="floatingPhoneNumber">Phone Number</label>
-                <div class="invalid-feedback" *ngIf="registerForm.get('phoneNumber')?.hasError('required')">
-                    Phone Number is required
-                </div>
-            </div>
+        <label class="field">
+          <span>Email</span>
+          <input type="email" formControlName="email" autocomplete="email" placeholder="you@email.com"
+            [class.is-invalid]="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" />
+          <small class="field-error" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('required')">Email is required</small>
+          <small class="field-error" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('email')">Invalid email</small>
+          <small class="field-error" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('emailExists')">Email already taken</small>
+        </label>
 
-            <div class="form-floating mb-3">
-                <input type="password" class="form-control" formControlName="password"
-                    [ngClass]="(registerForm.get('password')?.touched) ? registerForm.get('password')?.invalid ? 'is-invalid' : 'is-valid' : ''"
-                    id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
-                <div class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('required')">
-                    Password is required
-                </div>
-                <div class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('pattern')">
-                    Password must contain at least 1 uppercase, 1 lowercase, 1 number, 1 non-alphanumeric and be at
-                    least 6 characters.
-                </div>
-            </div>
+        <label class="field">
+          <span>Phone</span>
+          <input type="text" formControlName="phoneNumber" placeholder="01xxxxxxxxx"
+            [class.is-invalid]="registerForm.get('phoneNumber')?.touched && registerForm.get('phoneNumber')?.invalid" />
+          <small class="field-error" *ngIf="registerForm.get('phoneNumber')?.touched && registerForm.get('phoneNumber')?.hasError('required')">Phone is required</small>
+        </label>
 
-            <button [disabled]="registerForm.invalid || registerForm.pending" class="w-100 btn btn-lg btn-primary"
-                type="submit">Sign up</button>
-            <div class="mt-3 text-center">
-                <p>Already have an account? <a routerLink="/account/login">Login</a></p>
-            </div>
-        </form>
+        <label class="field">
+          <span>Password</span>
+          <input type="password" formControlName="password" autocomplete="new-password" placeholder="••••••••"
+            [class.is-invalid]="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" />
+          <small class="field-error" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('required')">Password is required</small>
+          <small class="field-error" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('pattern')">
+            Use 6–10 chars with upper, lower, number, and symbol.
+          </small>
+        </label>
+
+        <button class="auth-submit" type="submit" [disabled]="registerForm.invalid || registerForm.pending">
+          <span>Create account</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"></path>
+            <path d="m13 5 7 7-7 7"></path>
+          </svg>
+        </button>
+      </form>
+
+      <p class="auth-switch">
+        Already have an account?
+        <a routerLink="/account/login">Sign in</a>
+      </p>
     </div>
-</div>
+  </div>
+</section>

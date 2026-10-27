@@ -144,7 +144,7 @@ private mountStripeCard(): void {
                 icon: 'warning',
                 title: 'Incomplete Address',
                 text: 'Please fill in all shipping address fields.',
-                confirmButtonColor: '#4361ee'
+                confirmButtonText: 'OK'
             });
             return;
         }
@@ -222,7 +222,7 @@ private createPaymentIntent(): void {
                 icon: 'error',
                 title: 'Payment Setup Failed',
                 text: 'Unable to initialize payment. Please try again.',
-                confirmButtonColor: '#e94560'
+                confirmButtonText: 'OK'
             });
         }
     });
@@ -237,7 +237,7 @@ private createPaymentIntent(): void {
             icon: 'warning',
             title: 'Card Incomplete',
             text: 'Please complete your card details.',
-            confirmButtonColor: '#4361ee'
+            confirmButtonText: 'OK'
         });
         return;
     }
@@ -269,7 +269,7 @@ private createPaymentIntent(): void {
                 icon: 'error',
                 title: 'Payment Failed',
                 text: error.message || 'A processing error occurred. Please go back to Payment and try again.',
-                confirmButtonColor: '#e94560'
+                confirmButtonText: 'OK'
             });
             return;
         }
@@ -291,7 +291,6 @@ private createPaymentIntent(): void {
                     icon: 'success',
                     title: 'Payment Successful!',
                     html: `<p>Your order <strong>#${createdOrder.id}</strong> has been placed.</p>`,
-                    confirmButtonColor: '#4361ee',
                     confirmButtonText: 'View My Orders'
                 }).then(() => this.router.navigateByUrl('/orders'));
             },
@@ -302,7 +301,7 @@ private createPaymentIntent(): void {
                     icon: 'error',
                     title: 'Order Failed',
                     text: 'Payment processed but order creation failed. Contact support.',
-                    confirmButtonColor: '#e94560'
+                    confirmButtonText: 'OK'
                 });
             }
         });
@@ -314,7 +313,7 @@ private createPaymentIntent(): void {
             icon: 'error',
             title: 'Payment Error',
             text: 'An unexpected error occurred.',
-            confirmButtonColor: '#e94560'
+            confirmButtonText: 'OK'
         });
     }
   }}

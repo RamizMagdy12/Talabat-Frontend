@@ -1,23 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap');
-
 :host {
-    --blue: #4361ee;
-    --blue-dark: #3451d1;
-    --blue-glow: rgba(67, 97, 238, 0.18);
-    --blue-light: #eef0ff;
-    --accent: #e94560;
-    --green: #10b981;
-    --green-glow: rgba(16, 185, 129, 0.15);
-    --text: #1a1a2e;
-    --text-muted: #8b8fad;
+    --blue: #ff4d00;
+    --blue-dark: #d93d00;
+    --blue-glow: rgba(255, 77, 0, 0.18);
+    --blue-light: #fff1ea;
+    --accent: #e11d48;
+    --green: #0f9f6e;
+    --green-glow: rgba(15, 159, 110, 0.15);
+    --text: #14181f;
+    --text-muted: #7a8494;
     --surface: #ffffff;
-    --bg: #f4f5fb;
-    --border: #e4e6f0;
+    --bg: #f3f5f9;
+    --border: #e4e8ef;
     --radius: 16px;
     --radius-sm: 10px;
-    --shadow-sm: 0 2px 8px rgba(26, 26, 46, 0.06);
-    --shadow-md: 0 8px 28px rgba(26, 26, 46, 0.10);
-    font-family: 'DM Sans', sans-serif;
+    --shadow-sm: 0 8px 24px rgba(14, 21, 32, 0.06);
+    --shadow-md: 0 18px 48px rgba(14, 21, 32, 0.12);
+    font-family: var(--font-body, "Manrope", sans-serif);
     display: block;
 }
 
@@ -728,5 +726,25 @@
 
     .stepper-line {
         max-width: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkout-wrapper {
+        padding: 16px 12px 36px;
+    }
+
+    .stepper-header {
+        gap: 0.35rem;
+    }
+
+    .stepper-line {
+        max-width: 28px;
+        flex: 1;
+    }
+
+    .step-card {
+        padding: 18px 14px;
+        border-radius: 14px;
     }
 }

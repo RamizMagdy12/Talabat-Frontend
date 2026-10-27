@@ -1,49 +1,106 @@
-<style>
-  header {
-    background: #34495e;
-    color: white;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-
-  header a:hover {
-    color: #f8f9fa;
-  }
-</style>
-<main>
-  <header class="d-flex justify-content-between align-items-center px-4">
-    <h1 class="m-0">
-      <a routerLink="/" class="text-white text-decoration-none">Talabat Store</a>
-    </h1>
-
-    <div class="d-flex align-items-center gap-3">
-      <a routerLink="/" class="btn btn-outline-light d-flex align-items-center">
-        <i class="fa fa-home me-2"></i> Home
-      </a>
-
-      <ng-container *ngIf="(accountService.currentUser$ | async) === null">
-        <a routerLink="/account/login" class="btn btn-outline-light d-flex align-items-center">
-          <i class="fa fa-sign-in-alt me-2"></i> Login
-        </a>
-      </ng-container>
-
-      <ng-container *ngIf="(accountService.currentUser$ | async) as user">
-        <a routerLink="/orders" class="btn btn-outline-light d-flex align-items-center">
-          <i class="fa fa-list-alt me-2"></i> My Orders
-        </a>
-        <a (click)="logout()" class="btn btn-outline-danger d-flex align-items-center" style="cursor: pointer;">
-          <i class="fa fa-sign-out-alt me-2"></i> Logout
-        </a>
-      </ng-container>
-
-      <a routerLink="/basket" class="btn btn-outline-light position-relative d-flex align-items-center">
-        <i class="fa fa-shopping-cart me-2"></i> Basket
-        <span *ngIf="(basketService.basketSource$ | async) as basket"
-          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light">
-          {{basket.items.length}}
+<div class="app-shell" [class.app-shell--auth]="isAuthRoute">
+  <header class="site-nav" *ngIf="!isAuthRoute">
+    <div class="site-nav__inner">
+      <a routerLink="/" class="brand" aria-label="Talabat home" (click)="menuOpen = false">
+        <span class="brand__mark">T</span>
+        <span class="brand__text">
+          <strong>Talabat</strong>
+          <small>Store</small>
         </span>
       </a>
+
+      <button type="button" class="nav-toggle" [attr.aria-expanded]="menuOpen" aria-label="Toggle menu" (click)="menuOpen = !menuOpen">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="site-nav__links" [class.is-open]="menuOpen" aria-label="Primary">
+        <a routerLink="/products" routerLinkActive="is-active" class="nav-link" (click)="menuOpen = false">Shop</a>
+        <a *ngIf="accountService.currentUser$ | async" routerLink="/orders" routerLinkActive="is-active" class="nav-link" (click)="menuOpen = false">Orders</a>
+        <a routerLink="/basket" routerLinkActive="is-active" class="nav-link nav-link--mobile" (click)="menuOpen = false">Basket</a>
+        <ng-container *ngIf="(accountService.currentUser$ | async) as user; else guestMobile">
+          <button type="button" class="nav-link nav-link--mobile" (click)="logout(); menuOpen = false">Logout</button>
+        </ng-container>
+        <ng-template #guestMobile>
+          <a routerLink="/account/login" class="nav-link nav-link--mobile" (click)="menuOpen = false">Sign in</a>
+          <a routerLink="/account/register" class="nav-link nav-link--mobile" (click)="menuOpen = false">Join</a>
+        </ng-template>
+      </nav>
+
+      <div class="site-nav__actions">
+        <ng-container *ngIf="(accountService.currentUser$ | async) as user; else guestActions">
+          <div class="user-chip" [title]="user.email">
+            <span class="user-chip__avatar">{{ user.displayName?.charAt(0) || 'U' }}</span>
+            <span class="user-chip__name">{{ user.displayName || user.email }}</span>
+          </div>
+          <button type="button" class="nav-btn nav-btn--ghost nav-btn--desktop" (click)="logout()">Logout</button>
+        </ng-container>
+        <ng-template #guestActions>
+          <a routerLink="/account/login" class="nav-btn nav-btn--ghost nav-btn--desktop">Sign in</a>
+          <a routerLink="/account/register" class="nav-btn nav-btn--solid nav-btn--desktop">Join</a>
+        </ng-template>
+
+        <a routerLink="/basket" class="nav-cart" aria-label="Basket" (click)="menuOpen = false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"></path>
+          </svg>
+          <span *ngIf="(basketService.basketSource$ | async) as basket"
+                class="nav-cart__badge"
+                [class.is-empty]="!basket.items?.length">
+            {{ basket.items?.length || 0 }}
+          </span>
+        </a>
+      </div>
     </div>
   </header>
-  <router-outlet></router-outlet>
-</main>
+
+  <main class="app-main" [class.app-main--auth]="isAuthRoute">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="site-footer" *ngIf="!isAuthRoute">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">
+        <a routerLink="/" class="brand" aria-label="Talabat home">
+          <span class="brand__mark">T</span>
+          <span class="brand__text">
+            <strong>Talabat</strong>
+            <small>Store</small>
+          </span>
+        </a>
+        <p>Fresh picks, fast delivery, and a checkout that stays out of your way.</p>
+      </div>
+
+      <div class="site-footer__cols">
+        <div class="site-footer__col">
+          <h3>Explore</h3>
+          <a routerLink="/products">Shop</a>
+          <a routerLink="/basket">Basket</a>
+          <a *ngIf="accountService.currentUser$ | async" routerLink="/orders">Orders</a>
+        </div>
+        <div class="site-footer__col">
+          <h3>Account</h3>
+          <ng-container *ngIf="(accountService.currentUser$ | async) as user; else footerGuest">
+            <span class="site-footer__muted">Signed in as {{ user.displayName || user.email }}</span>
+            <button type="button" class="site-footer__linkbtn" (click)="logout()">Logout</button>
+          </ng-container>
+          <ng-template #footerGuest>
+            <a routerLink="/account/login">Sign in</a>
+            <a routerLink="/account/register">Create account</a>
+          </ng-template>
+        </div>
+        <div class="site-footer__col">
+          <h3>Support</h3>
+          <span class="site-footer__muted">Care · 24/7</span>
+          <a href="mailto:support@talabat.local">support@talabat.local</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-footer__bar">
+      <span>© {{ currentYear }} Talabat Store. All rights reserved.</span>
+      <span>Built for speed · Delivered with care</span>
+    </div>
+  </footer>
+</div>

@@ -1,197 +1,120 @@
-<div class="container-xl py-4 min-vh-100" style="background:#f4f5fb;">
+<section class="shop-page">
+  <div class="shop-hero">
+    <div class="shop-hero__copy">
+      <p class="shop-kicker">Talabat Store</p>
+      <h1>Discover what you crave</h1>
+      <p class="shop-hero__sub">Filter by brand, category, or price — then add to basket in one tap.</p>
+    </div>
+    <div class="shop-hero__stat" *ngIf="totalCount > 0">
+      <strong>{{ totalCount }}</strong>
+      <span>products available</span>
+    </div>
+  </div>
 
-  <!-- ── Filter Bar ── -->
-  <div class="card border rounded-3 shadow-sm mb-4" *ngIf="brands && categories">
-    <div class="card-body d-flex flex-wrap align-items-start gap-3 py-3 px-4">
+  <div class="filter-panel" *ngIf="brands && categories">
+    <div class="filter-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" aria-hidden="true">
+        <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+      </svg>
+      <input (keyup.enter)="onSearch()" #search type="search" placeholder="Search products..." />
+    </div>
 
-      <!-- Search -->
-      <div class="input-group" style="min-width:200px; max-width:240px;">
-        <span class="input-group-text bg-light border-end-0">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
-            <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
-          </svg>
-        </span>
-        <input (keyup.enter)="onSearch()" #search type="text"
-          class="form-control form-control-sm bg-light border-start-0 ps-0"
-          placeholder="Search products..." />
-      </div>
-
-      <!-- Divider -->
-      <div class="vr my-1"></div>
-
-      <!-- Brands -->
-      <div class="d-flex flex-column gap-2">
-        <label class="text-uppercase fw-bold text-secondary" style="font-size:0.68rem; letter-spacing:0.1em;">Brand</label>
-        <div class="d-flex flex-wrap gap-2">
-          <button *ngFor="let brand of brands"
-            class="btn btn-sm rounded-pill"
-            [ngClass]="brand.id === shopParams.brandId ? 'btn-primary' : 'btn-outline-secondary'"
-            (click)="onBrandSelected(brand.id)">
-            {{ brand.name }}
-          </button>
-        </div>
-      </div>
-
-      <!-- Divider -->
-      <div class="vr my-1"></div>
-
-      <!-- Categories -->
-      <div class="d-flex flex-column gap-2">
-        <label class="text-uppercase fw-bold text-secondary" style="font-size:0.68rem; letter-spacing:0.1em;">Category</label>
-        <div class="d-flex flex-wrap gap-2">
-          <button *ngFor="let category of categories"
-            class="btn btn-sm rounded-pill"
-            [ngClass]="category.id === shopParams.categoryId ? 'btn-primary' : 'btn-outline-secondary'"
-            (click)="onCategorySelected(category.id)">
-            {{ category.name }}
-          </button>
-        </div>
-      </div>
-
-      <!-- Divider -->
-      <div class="vr my-1"></div>
-
-      <!-- Sort -->
-      <div class="d-flex flex-column gap-2" style="min-width:150px;">
-        <label class="text-uppercase fw-bold text-secondary" style="font-size:0.68rem; letter-spacing:0.1em;">Sort</label>
-        <select class="form-select form-select-sm" (change)="onSortSelected($event)">
-          <option *ngFor="let sort of sortOptions" [value]="sort.value">{{ sort.name }}</option>
-        </select>
-      </div>
-
-      <!-- Actions -->
-      <div class="d-flex align-items-end gap-2 ms-auto pt-3">
-        <button class="btn btn-primary btn-sm px-4 fw-semibold" (click)="onSearch()">Search</button>
-        <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1" (click)="onReset()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
-            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-            <path d="M3 3v5h5" />
-          </svg>
-          Reset
+    <div class="filter-block">
+      <span class="filter-label">Brand</span>
+      <div class="chip-row">
+        <button type="button" *ngFor="let brand of brands" class="chip"
+          [class.is-active]="brand.id === shopParams.brandId"
+          (click)="onBrandSelected(brand.id)">
+          {{ brand.name }}
         </button>
       </div>
-
     </div>
-  </div>
 
-  <!-- ── Results Header ── -->
-  <div class="mb-3 px-1">
-    <span class="text-secondary small" *ngIf="totalCount && totalCount > 0">
-      Showing
-      <strong class="text-dark">{{ (shopParams.pageIndex - 1) * shopParams.pageSize + 1 }}–{{
-        shopParams.pageIndex * shopParams.pageSize > totalCount
-        ? totalCount
-        : shopParams.pageIndex * shopParams.pageSize
-      }}</strong>
-      of <strong class="text-dark">{{ totalCount }}</strong> results
-    </span>
-    <span class="text-secondary small" *ngIf="totalCount === 0">
-      No results found for this filter
-    </span>
-  </div>
+    <div class="filter-block">
+      <span class="filter-label">Category</span>
+      <div class="chip-row">
+        <button type="button" *ngFor="let category of categories" class="chip"
+          [class.is-active]="category.id === shopParams.categoryId"
+          (click)="onCategorySelected(category.id)">
+          {{ category.name }}
+        </button>
+      </div>
+    </div>
 
-  <!-- ── Product Grid ── -->
-  <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-xl-5 g-4">
-    <div *ngFor="let product of products" class="col">
-      <div class="card h-100 border shadow-sm">
-
-        <!-- Image -->
-        <div class="d-flex align-items-center justify-content-center p-3 border-bottom"
-          style="height:190px; background:linear-gradient(135deg,#f8f8ff,#eef0ff);">
-          <img [src]="product.pictureUrl" [alt]="product.name"
-            class="img-fluid object-fit-contain" style="max-height:150px;" />
-        </div>
-
-        <!-- Info -->
-        <div class="card-body d-flex flex-column p-3">
-          <p class="text-uppercase text-secondary fw-semibold mb-1" style="font-size:0.7rem; letter-spacing:0.08em;">
-            {{ product.brand || 'No Brand' }}
-          </p>
-          <h6 class="fw-semibold mb-3" style="font-size:0.9rem; line-height:1.45; flex-grow:1;
-            display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
-            {{ product.name }}
-          </h6>
-
-          <div class="d-flex align-items-center justify-content-between gap-2 mt-auto">
-            <span class="fw-bold text-danger" style="font-size:1.05rem;">
-              {{ product.price | currency }}
-            </span>
-            <div class="d-flex gap-2">
-              <button (click)="addItemToBasket(product)"
-                class="btn btn-outline-primary btn-sm"
-                title="Add to Cart">
-                <i class="fa fa-shopping-cart"></i>
-              </button>
-              <button [routerLink]="['/products', product.id]"
-                class="btn btn-dark btn-sm d-flex align-items-center gap-1 fw-semibold"
-                style="font-size:0.8rem;">
-                View
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
+    <div class="filter-toolbar">
+      <label class="filter-sort">
+        <span class="filter-label">Sort</span>
+        <select (change)="onSortSelected($event)">
+          <option *ngFor="let sort of sortOptions" [value]="sort.value">{{ sort.name }}</option>
+        </select>
+      </label>
+      <div class="filter-actions">
+        <button type="button" class="btn-solid" (click)="onSearch()">Search</button>
+        <button type="button" class="btn-ghost" (click)="onReset()">Reset</button>
       </div>
     </div>
   </div>
 
-  <!-- ── Pagination ── -->
-  <div class="d-flex justify-content-center mt-5" *ngIf="totalCount > 0">
-    <nav>
-      <ul class="pagination pagination-sm mb-0 bg-white shadow-sm border rounded-3 px-2 py-2 gap-1">
-
-        <!-- Previous -->
-        <li class="page-item" [class.disabled]="shopParams.pageIndex === 1">
-          <button class="page-link border-0 rounded-2 d-flex align-items-center gap-1 fw-semibold"
-            (click)="shopParams.pageIndex > 1 && onPageChanged(shopParams.pageIndex - 1)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-            Prev
-          </button>
-        </li>
-
-        <ng-container *ngFor="let page of pagesArray">
-          <ng-container *ngIf="
-            page === 1 ||
-            page === totalPages ||
-            page === shopParams.pageIndex ||
-            page === shopParams.pageIndex - 1 ||
-            page === shopParams.pageIndex + 1
-          ">
-            <li class="page-item" [class.active]="shopParams.pageIndex === page">
-              <button class="page-link border-0 rounded-2 fw-semibold"
-                (click)="onPageChanged(page)">{{ page }}</button>
-            </li>
-          </ng-container>
-
-          <!-- Left ellipsis -->
-          <li class="page-item disabled" *ngIf="page === shopParams.pageIndex - 2 && page > 1">
-            <span class="page-link border-0 bg-transparent">…</span>
-          </li>
-
-          <!-- Right ellipsis -->
-          <li class="page-item disabled" *ngIf="page === shopParams.pageIndex + 2 && page < totalPages">
-            <span class="page-link border-0 bg-transparent">…</span>
-          </li>
-        </ng-container>
-
-        <!-- Next -->
-        <li class="page-item" [class.disabled]="shopParams.pageIndex === totalPages">
-          <button class="page-link border-0 rounded-2 d-flex align-items-center gap-1 fw-semibold"
-            (click)="shopParams.pageIndex < totalPages && onPageChanged(shopParams.pageIndex + 1)">
-            Next
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14">
-              <path d="M9 18l6-6-6-6" />
-            </svg>
-          </button>
-        </li>
-
-      </ul>
-    </nav>
+  <div class="results-meta">
+    <span *ngIf="totalCount > 0">
+      Showing
+      <strong>{{ (shopParams.pageIndex - 1) * shopParams.pageSize + 1 }}–{{
+        shopParams.pageIndex * shopParams.pageSize > totalCount ? totalCount : shopParams.pageIndex * shopParams.pageSize
+      }}</strong>
+      of <strong>{{ totalCount }}</strong>
+    </span>
+    <span *ngIf="totalCount === 0">No products match these filters.</span>
   </div>
 
-</div>
+  <div class="product-grid" *ngIf="products.length; else emptyState">
+    <article class="product-card" *ngFor="let product of products">
+      <a class="product-card__media" [routerLink]="['/products', product.id]">
+        <img [src]="product.pictureUrl" [alt]="product.name" loading="lazy" />
+      </a>
+      <div class="product-card__body">
+        <p class="product-card__brand">{{ product.brand || 'Brand' }}</p>
+        <h2 class="product-card__name">
+          <a [routerLink]="['/products', product.id]">{{ product.name }}</a>
+        </h2>
+        <div class="product-card__footer">
+          <span class="product-card__price">{{ product.price | currency }}</span>
+          <div class="product-card__actions">
+            <button type="button" class="icon-btn" title="Add to cart" (click)="addItemToBasket(product); $event.preventDefault(); $event.stopPropagation()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"></path>
+              </svg>
+            </button>
+            <a class="view-btn" [routerLink]="['/products', product.id]">View</a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <h3>Nothing here yet</h3>
+      <p>Try clearing filters or searching another keyword.</p>
+      <button type="button" class="btn-solid" (click)="onReset()">Clear filters</button>
+    </div>
+  </ng-template>
+
+  <nav class="pager" *ngIf="totalCount > 0" aria-label="Pagination">
+    <button type="button" class="pager-btn" [disabled]="shopParams.pageIndex === 1"
+      (click)="shopParams.pageIndex > 1 && onPageChanged(shopParams.pageIndex - 1)">Prev</button>
+
+    <ng-container *ngFor="let page of pagesArray">
+      <button type="button" class="pager-btn"
+        *ngIf="page === 1 || page === totalPages || page === shopParams.pageIndex || page === shopParams.pageIndex - 1 || page === shopParams.pageIndex + 1"
+        [class.is-active]="shopParams.pageIndex === page"
+        (click)="onPageChanged(page)">{{ page }}</button>
+      <span class="pager-gap" *ngIf="page === shopParams.pageIndex - 2 && page > 1">…</span>
+      <span class="pager-gap" *ngIf="page === shopParams.pageIndex + 2 && page < totalPages">…</span>
+    </ng-container>
+
+    <button type="button" class="pager-btn" [disabled]="shopParams.pageIndex === totalPages"
+      (click)="shopParams.pageIndex < totalPages && onPageChanged(shopParams.pageIndex + 1)">Next</button>
+  </nav>
+</section>
