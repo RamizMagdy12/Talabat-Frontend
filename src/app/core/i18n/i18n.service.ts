@@ -1,6 +1,6 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 
 export type AppLang = 'en' | 'ar';
 
@@ -9,13 +9,14 @@ export class I18nService {
   private readonly http = inject(HttpClient);
   private readonly storageKey = 'talabat_lang';
   private dictionaries: Record<AppLang, Record<string, string>> = { en: {}, ar: {} };
-  private ready = false;
 
-  private readonly langSubject = new BehaviorSubject<AppLang>(this.readStoredLang());
-  readonly lang$ = this.langSubject.asObservable();
+  /** Bumps when dictionaries load or language changes so impure pipes refresh. */
+  readonly version = signal(0);
+
+  private currentLang: AppLang = this.readStoredLang();
 
   get lang(): AppLang {
-    return this.langSubject.value;
+    return this.currentLang;
   }
 
   get dir(): 'ltr' | 'rtl' {
@@ -23,27 +24,29 @@ export class I18nService {
   }
 
   async init(): Promise<void> {
-    if (this.ready) {
-      this.applyDocument();
-      return;
+    try {
+      const [en, ar] = await Promise.all([
+        firstValueFrom(this.http.get<Record<string, string>>('i18n/en.json')),
+        firstValueFrom(this.http.get<Record<string, string>>('i18n/ar.json'))
+      ]);
+      this.dictionaries.en = en ?? {};
+      this.dictionaries.ar = ar ?? {};
+    } catch (err) {
+      console.error('Failed to load i18n resources', err);
+      this.dictionaries.en = {};
+      this.dictionaries.ar = {};
     }
 
-    const [en, ar] = await Promise.all([
-      firstValueFrom(this.http.get<Record<string, string>>('/i18n/en.json')),
-      firstValueFrom(this.http.get<Record<string, string>>('/i18n/ar.json'))
-    ]);
-
-    this.dictionaries.en = en ?? {};
-    this.dictionaries.ar = ar ?? {};
-    this.ready = true;
     this.applyDocument();
+    this.version.update(v => v + 1);
   }
 
   setLang(lang: AppLang): void {
     if (lang !== 'en' && lang !== 'ar') return;
+    this.currentLang = lang;
     localStorage.setItem(this.storageKey, lang);
-    this.langSubject.next(lang);
     this.applyDocument();
+    this.version.update(v => v + 1);
   }
 
   toggleLang(): void {
@@ -51,6 +54,9 @@ export class I18nService {
   }
 
   t(key: string, params?: Record<string, string | number>): string {
+    // Depend on version so Angular re-evaluates pipes after load/switch.
+    this.version();
+
     const dict = this.dictionaries[this.lang] || {};
     const fallback = this.dictionaries.en || {};
     let value = dict[key] ?? fallback[key] ?? key;
@@ -75,8 +81,8 @@ export class I18nService {
     const html = document.documentElement;
     html.lang = this.lang;
     html.dir = this.dir;
-    document.title = this.t('app.tagline').includes('Talabat') || this.lang === 'en'
-      ? `Talabat — ${this.t('app.tagline')}`
-      : `${this.t('app.name')} — ${this.t('app.tagline')}`;
+    const name = this.t('app.name');
+    const tagline = this.t('app.tagline');
+    document.title = name.startsWith('app.') ? 'Talabat' : `${name} — ${tagline}`;
   }
 }

@@ -11,6 +11,8 @@ export class TranslatePipe implements PipeTransform {
 
   transform(key: string, params?: Record<string, string | number>): string {
     if (!key) return '';
+    // Read version so change detection re-runs after dictionaries load.
+    this.i18n.version();
     return this.i18n.t(key, params);
   }
 }

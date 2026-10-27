@@ -78,8 +78,7 @@
   font-size: 0.72rem;
   color: var(--muted);
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .site-nav__links {

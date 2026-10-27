@@ -22,11 +22,6 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              },
-              {
-                "glob": "*.json",
-                "input": "../../Shared/Resources",
-                "output": "/i18n"
               }
             ],
             "styles": [
@@ -90,11 +85,6 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              },
-              {
-                "glob": "*.json",
-                "input": "../../Shared/Resources",
-                "output": "/i18n"
               }
             ],
             "styles": [
