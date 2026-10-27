@@ -1,10 +1,10 @@
-import { Component, OnInit, inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, inject, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../core/services/product.service';
 import { BasketService } from '../core/services/basket.service';
-import { Product } from '../shared/models/product';
+import { Product, productDisplayPrice } from '../shared/models/product';
 import { Brand } from '../shared/models/brand';
 import { Category } from '../shared/models/category';
 import { ShopParams } from '../shared/models/shopParams';
@@ -16,13 +16,16 @@ import { ShopParams } from '../shared/models/shopParams';
     templateUrl: './product-list.component.html',
     styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, AfterViewInit {
     @ViewChild('search') searchTerm?: ElementRef;
     products: Product[] = [];
+    offers: Product[] = [];
+    bestSellers: Product[] = [];
     brands: Brand[] = [];
     categories: Category[] = [];
     shopParams = new ShopParams();
     totalCount = 0;
+    private pendingFragment: string | null = null;
 
     sortOptions = [
         { name: 'Alphabetical', value: 'name' },
@@ -32,11 +35,22 @@ export class ProductListComponent implements OnInit {
 
     productService = inject(ProductService);
     basketService = inject(BasketService);
+    route = inject(ActivatedRoute);
 
     ngOnInit(): void {
+        this.route.fragment.subscribe(fragment => {
+            this.pendingFragment = fragment;
+            this.scrollToFragment();
+        });
         this.getProducts();
         this.getBrands();
         this.getCategories();
+        this.getOffers();
+        this.getBestSellers();
+    }
+
+    ngAfterViewInit(): void {
+        this.scrollToFragment();
     }
 
     getProducts() {
@@ -49,6 +63,34 @@ export class ProductListComponent implements OnInit {
             },
             error: (err) => console.error(err)
         });
+    }
+
+    getOffers() {
+        this.productService.getOffers().subscribe({
+            next: (items) => {
+                this.offers = items ?? [];
+                this.scrollToFragment();
+            },
+            error: (err) => console.error(err)
+        });
+    }
+
+    getBestSellers() {
+        this.productService.getBestSellers(8).subscribe({
+            next: (items) => {
+                this.bestSellers = items ?? [];
+                this.scrollToFragment();
+            },
+            error: (err) => console.error(err)
+        });
+    }
+
+    private scrollToFragment() {
+        if (!this.pendingFragment) return;
+        const id = this.pendingFragment;
+        setTimeout(() => {
+            document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 50);
     }
 
     getBrands() {
@@ -115,5 +157,20 @@ export class ProductListComponent implements OnInit {
 
     addItemToBasket(product: Product) {
         this.basketService.addItemToBasket(product);
+    }
+
+    displayPrice(product: Product): number {
+        return productDisplayPrice(product);
+    }
+
+    offerEndsIn(product: Product): string | null {
+        if (!product.hasActiveOffer || !product.offerEndUtc) return null;
+        const end = new Date(product.offerEndUtc).getTime();
+        const diff = end - Date.now();
+        if (diff <= 0) return 'Ending soon';
+        const hours = Math.floor(diff / 3_600_000);
+        if (hours < 24) return `${Math.max(1, hours)}h left`;
+        const days = Math.floor(hours / 24);
+        return `${days}d left`;
     }
 }

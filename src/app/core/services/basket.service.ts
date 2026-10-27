@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { Basket, BasketItem, BasketTotals, CustomerBasket } from '../../shared/models/basket';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { Product } from '../../shared/models/product';
+import { Product, productDisplayPrice } from '../../shared/models/product';
 
 @Injectable({
     providedIn: 'root'
@@ -206,7 +206,7 @@ export class BasketService {
         return {
             id: item.id,
             productName: item.name,
-            price: item.price,
+            price: productDisplayPrice(item),
             quantity: 0,
             productUrl: item.pictureUrl,
             brand: item.brand,

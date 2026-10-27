@@ -40,4 +40,14 @@ export class ProductService {
     getCategories(): Observable<Category[]> {
         return this.http.get<Category[]>(`${this.apiUrl}/categories`);
     }
+
+    getOffers(): Observable<Product[]> {
+        return this.http.get<Product[]>(`${this.apiUrl}/offers`);
+    }
+
+    getBestSellers(count = 8): Observable<Product[]> {
+        return this.http.get<Product[]>(`${this.apiUrl}/bestsellers`, {
+            params: { count: String(count) }
+        });
+    }
 }

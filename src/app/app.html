@@ -14,7 +14,9 @@
       </button>
 
       <nav class="site-nav__links" [class.is-open]="menuOpen" aria-label="Primary">
-        <a routerLink="/products" routerLinkActive="is-active" class="nav-link" (click)="menuOpen = false">Shop</a>
+        <a routerLink="/products" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="menuOpen = false">Shop</a>
+        <a routerLink="/products" fragment="offers" class="nav-link" (click)="menuOpen = false">Offers</a>
+        <a routerLink="/products" fragment="bestsellers" class="nav-link" (click)="menuOpen = false">Best sellers</a>
         <a *ngIf="accountService.currentUser$ | async" routerLink="/orders" routerLinkActive="is-active" class="nav-link" (click)="menuOpen = false">Orders</a>
         <a routerLink="/basket" routerLinkActive="is-active" class="nav-link nav-link--mobile" (click)="menuOpen = false">Basket</a>
         <ng-container *ngIf="(accountService.currentUser$ | async) as user; else guestMobile">
@@ -76,6 +78,8 @@
         <div class="site-footer__col">
           <h3>Explore</h3>
           <a routerLink="/products">Shop</a>
+          <a routerLink="/products" fragment="offers">Offers</a>
+          <a routerLink="/products" fragment="bestsellers">Best sellers</a>
           <a routerLink="/basket">Basket</a>
           <a *ngIf="accountService.currentUser$ | async" routerLink="/orders">Orders</a>
         </div>

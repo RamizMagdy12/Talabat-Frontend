@@ -80,6 +80,32 @@
   color: var(--brand-deep);
 }
 
+.detail-price-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.55rem 0.85rem;
+  margin-top: 0.15rem;
+}
+
+.detail-price-was {
+  margin: 0;
+  color: var(--muted);
+  text-decoration: line-through;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.detail-offer-pill {
+  background: var(--brand-soft);
+  color: var(--brand-deep);
+  border: 1px solid #ffd2bf;
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
 .detail-tags {
   display: flex;
   flex-wrap: wrap;

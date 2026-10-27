@@ -14,10 +14,20 @@
     <div class="detail-info">
       <p class="detail-brand">{{ product.brand }}</p>
       <h1>{{ product.name }}</h1>
-      <p class="detail-price">{{ product.price | currency }}</p>
+      <div class="detail-price-wrap" *ngIf="product.hasActiveOffer; else regularPrice">
+        <p class="detail-price">{{ product.currentPrice || product.offerPrice | currency }}</p>
+        <p class="detail-price-was">{{ product.price | currency }}</p>
+        <span class="detail-offer-pill" *ngIf="product.offerEndUtc">
+          Offer ends {{ product.offerEndUtc | date:'mediumDate' }}
+        </span>
+      </div>
+      <ng-template #regularPrice>
+        <p class="detail-price">{{ product.price | currency }}</p>
+      </ng-template>
       <div class="detail-tags">
         <span>{{ product.brand }}</span>
         <span>{{ product.category }}</span>
+        <span *ngIf="product.hasActiveOffer">On offer</span>
       </div>
       <p class="detail-desc">{{ product.description }}</p>
       <div class="detail-actions">
