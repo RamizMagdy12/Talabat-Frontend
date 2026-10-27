@@ -1,4 +1,4 @@
-# Talabat 2026
+# Talabat 
 
 Full-stack e-commerce platform: **ASP.NET Core** backend (API + Admin) and **Angular** storefront, with bilingual **English / Arabic** UI.
 
