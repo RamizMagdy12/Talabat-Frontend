@@ -9,13 +9,15 @@ import { AccountService } from '../../account/account.service';
 import { IDeliveryMethod, IShippingAddress, IOrderToCreate } from '../../shared/models/order';
 import { environment } from '../../../environments/environment';
 import Swal from 'sweetalert2';
+import { I18nService } from '../../core/i18n/i18n.service';
+import { TranslatePipe } from '../../core/i18n/translate.pipe';
 
 declare var Stripe: any;
 
 @Component({
     selector: 'app-checkout',
     standalone: true,
-    imports: [CommonModule, FormsModule, RouterModule],
+    imports: [CommonModule, FormsModule, RouterModule, TranslatePipe],
     templateUrl: './checkout.component.html',
     styleUrls: ['./checkout.component.css']
 })
@@ -51,7 +53,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         private paymentService: PaymentService,
         private accountService: AccountService,
         private router: Router,
-        private ngZone: NgZone
+        private ngZone: NgZone,
+        private i18n: I18nService
     ) { }
 
     ngOnInit(): void {
@@ -177,9 +180,9 @@ private mountStripeCard(): void {
         if (this.currentStep === 1 && !this.isAddressValid()) {
             Swal.fire({
                 icon: 'warning',
-                title: 'Incomplete Address',
-                text: 'Please fill in all shipping address fields.',
-                confirmButtonText: 'OK'
+                title: this.i18n.t('checkout.msg.incompleteAddressTitle'),
+                text: this.i18n.t('checkout.msg.incompleteAddressText'),
+                confirmButtonText: this.i18n.t('common.ok')
             });
             return;
         }
@@ -255,9 +258,9 @@ private createPaymentIntent(): void {
             console.error('Failed to create payment intent', err);
             Swal.fire({
                 icon: 'error',
-                title: 'Payment Setup Failed',
-                text: 'Unable to initialize payment. Please try again.',
-                confirmButtonText: 'OK'
+                title: this.i18n.t('checkout.msg.paymentSetupFailedTitle'),
+                text: this.i18n.t('checkout.msg.paymentSetupFailedText'),
+                confirmButtonText: this.i18n.t('common.ok')
             });
         }
     });
@@ -270,9 +273,9 @@ private createPaymentIntent(): void {
     if (!this.cardComplete) {
         Swal.fire({
             icon: 'warning',
-            title: 'Card Incomplete',
-            text: 'Please complete your card details.',
-            confirmButtonText: 'OK'
+            title: this.i18n.t('checkout.msg.cardIncompleteTitle'),
+            text: this.i18n.t('checkout.msg.cardIncompleteText'),
+            confirmButtonText: this.i18n.t('common.ok')
         });
         return;
     }
@@ -302,9 +305,9 @@ private createPaymentIntent(): void {
             }
             Swal.fire({
                 icon: 'error',
-                title: 'Payment Failed',
-                text: error.message || 'A processing error occurred. Please go back to Payment and try again.',
-                confirmButtonText: 'OK'
+                title: this.i18n.t('checkout.msg.paymentFailedTitle'),
+                text: error.message || this.i18n.t('checkout.msg.paymentFailedText'),
+                confirmButtonText: this.i18n.t('common.ok')
             });
             return;
         }
@@ -324,9 +327,9 @@ private createPaymentIntent(): void {
                 this.basketService.deleteBasket(basket.id).subscribe();
                 Swal.fire({
                     icon: 'success',
-                    title: 'Payment Successful!',
-                    html: `<p>Your order <strong>#${createdOrder.id}</strong> has been placed.</p>`,
-                    confirmButtonText: 'View My Orders'
+                    title: this.i18n.t('checkout.msg.paymentSuccessTitle'),
+                    html: `<p>${this.i18n.t('checkout.msg.orderPlaced', { id: createdOrder.id })}</p>`,
+                    confirmButtonText: this.i18n.t('checkout.msg.viewOrders')
                 }).then(() => this.router.navigateByUrl('/orders'));
             },
             error: (err) => {
@@ -334,9 +337,9 @@ private createPaymentIntent(): void {
                 console.error(err);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Order Failed',
-                    text: 'Payment processed but order creation failed. Contact support.',
-                    confirmButtonText: 'OK'
+                    title: this.i18n.t('checkout.msg.orderFailedTitle'),
+                    text: this.i18n.t('checkout.msg.orderFailedText'),
+                    confirmButtonText: this.i18n.t('common.ok')
                 });
             }
         });
@@ -346,9 +349,9 @@ private createPaymentIntent(): void {
         console.error(err);
         Swal.fire({
             icon: 'error',
-            title: 'Payment Error',
-            text: 'An unexpected error occurred.',
-            confirmButtonText: 'OK'
+            title: this.i18n.t('checkout.msg.paymentErrorTitle'),
+            text: this.i18n.t('checkout.msg.paymentErrorText'),
+            confirmButtonText: this.i18n.t('common.ok')
         });
     }
   }}

@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { OrderService } from '../../core/services/order.service';
 import { IOrder } from '../../shared/models/order';
+import { I18nService } from '../../core/i18n/i18n.service';
+import { TranslatePipe } from '../../core/i18n/translate.pipe';
 
 @Component({
     selector: 'app-order-details',
     standalone: true,
-    imports: [CommonModule, RouterModule],
+    imports: [CommonModule, RouterModule, TranslatePipe],
     templateUrl: './order-details.component.html',
     styleUrls: ['./order-details.component.css']
 })
@@ -17,7 +19,8 @@ export class OrderDetailsComponent implements OnInit {
 
     constructor(
         private orderService: OrderService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private i18n: I18nService
     ) { }
 
     ngOnInit(): void {
@@ -64,13 +67,13 @@ export class OrderDetailsComponent implements OnInit {
 
     getStatusText(status: any): string {
         switch (Number(status)) {
-            case 0: return 'Pending';
-            case 1: return 'Payment Received';
-            case 2: return 'Payment Failed';
-            case 3: return 'Preparing';
-            case 4: return 'Out For Delivery';
-            case 5: return 'Delivered';
-            default: return 'Pending';
+            case 0: return this.i18n.t('orders.status.pending');
+            case 1: return this.i18n.t('orders.status.paymentReceived');
+            case 2: return this.i18n.t('orders.status.paymentFailed');
+            case 3: return this.i18n.t('orders.status.preparing');
+            case 4: return this.i18n.t('orders.status.outForDelivery');
+            case 5: return this.i18n.t('orders.status.delivered');
+            default: return this.i18n.t('orders.status.pending');
         }
     }
 

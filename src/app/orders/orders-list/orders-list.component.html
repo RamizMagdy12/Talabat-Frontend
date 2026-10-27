@@ -1,13 +1,13 @@
 <section class="orders-page">
   <header class="orders-hero">
     <div class="orders-hero__copy">
-      <p class="shop-kicker">Your activity</p>
-      <h1>My Orders</h1>
-      <p class="orders-hero__sub">Track status, delivery, and totals in one place.</p>
+      <p class="shop-kicker">{{ 'orders.kicker' | t }}</p>
+      <h1>{{ 'orders.title' | t }}</h1>
+      <p class="orders-hero__sub">{{ 'orders.sub' | t }}</p>
     </div>
     <div class="orders-hero__stat" *ngIf="!isLoading">
       <strong>{{ orders.length }}</strong>
-      <span>{{ orders.length === 1 ? 'order' : 'orders' }}</span>
+      <span>{{ (orders.length === 1 ? 'orders.countOne' : 'orders.countMany') | t }}</span>
     </div>
   </header>
 
@@ -24,9 +24,9 @@
         <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
       </svg>
     </div>
-    <h2>No orders yet</h2>
-    <p>Browse the store and place your first order.</p>
-    <a routerLink="/products" class="btn-solid">Browse products</a>
+    <h2>{{ 'orders.empty' | t }}</h2>
+    <p>{{ 'orders.emptyHint' | t }}</p>
+    <a routerLink="/products" class="btn-solid">{{ 'basket.browse' | t }}</a>
   </div>
 
   <div class="orders-grid" *ngIf="!isLoading && orders.length > 0">
@@ -34,7 +34,7 @@
        [style.animation-delay]="(i * 0.05) + 's'">
       <div class="order-card__top">
         <div class="order-id">
-          <span class="order-hash">Order</span>
+          <span class="order-hash">{{ 'orders.orderLabel' | t }}</span>
           <strong>#{{ order.id }}</strong>
         </div>
         <span class="status-badge" [ngClass]="getStatusClass(order.status)">
@@ -59,14 +59,14 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
           </svg>
-          {{ order.items.length }} item(s)
+          {{ 'orders.itemCount' | t:{ count: order.items.length } }}
         </span>
       </div>
 
       <div class="order-card__footer">
         <span class="order-total">{{ order.total | currency }}</span>
         <span class="view-link">
-          View details
+          {{ 'orders.viewDetails' | t }}
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
           </svg>

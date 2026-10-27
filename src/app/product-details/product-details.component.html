@@ -4,7 +4,7 @@
       <path d="M19 12H5"></path>
       <path d="m12 19-7-7 7-7"></path>
     </svg>
-    Back to products
+    {{ 'product.back' | t }}
   </a>
 
   <div class="detail-card">
@@ -18,7 +18,7 @@
         <p class="detail-price">{{ product.currentPrice || product.offerPrice | currency }}</p>
         <p class="detail-price-was">{{ product.price | currency }}</p>
         <span class="detail-offer-pill" *ngIf="product.offerEndUtc">
-          Offer ends {{ product.offerEndUtc | date:'mediumDate' }}
+          {{ 'product.offerEnds' | t:{ date: ((product.offerEndUtc | date:'mediumDate') ?? '') } }}
         </span>
       </div>
       <ng-template #regularPrice>
@@ -27,12 +27,12 @@
       <div class="detail-tags">
         <span>{{ product.brand | locField: product.brandAr }}</span>
         <span>{{ product.category | locField: product.categoryAr }}</span>
-        <span *ngIf="product.hasActiveOffer">On offer</span>
+        <span *ngIf="product.hasActiveOffer">{{ 'product.onOffer' | t }}</span>
       </div>
       <p class="detail-desc">{{ product.description | locField: product.descriptionAr }}</p>
       <div class="detail-actions">
-        <button type="button" class="btn-solid" (click)="addItemToBasket()">Add to cart</button>
-        <a routerLink="/products" class="btn-ghost">Keep shopping</a>
+        <button type="button" class="btn-solid" (click)="addItemToBasket()">{{ 'shop.addToCart' | t }}</button>
+        <a routerLink="/products" class="btn-ghost">{{ 'product.keepShopping' | t }}</a>
       </div>
     </div>
   </div>
@@ -40,6 +40,6 @@
 
 <ng-template #loading>
   <section class="detail-page">
-    <div class="detail-loading">Loading product…</div>
+    <div class="detail-loading">{{ 'product.loading' | t }}</div>
   </section>
 </ng-template>

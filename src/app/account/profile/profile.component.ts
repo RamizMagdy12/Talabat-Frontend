@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AccountService } from '../account.service';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
+import { I18nService } from '../../core/i18n/i18n.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,7 @@ import { TranslatePipe } from '../../core/i18n/translate.pipe';
 })
 export class ProfileComponent implements OnInit {
   accountService = inject(AccountService);
+  i18n = inject(I18nService);
   isLoading = true;
   isSaving = false;
   isChangingPassword = false;
@@ -64,8 +66,8 @@ export class ProfileComponent implements OnInit {
         this.isLoading = false;
         Swal.fire({
           icon: 'error',
-          title: 'Could not load profile',
-          text: 'Please sign in again.'
+          title: this.i18n.t('profile.msg.loadFailed'),
+          text: this.i18n.t('profile.msg.signInAgain')
         });
       }
     });
@@ -91,7 +93,7 @@ export class ProfileComponent implements OnInit {
         this.isSaving = false;
         Swal.fire({
           icon: 'success',
-          title: 'Profile updated',
+          title: this.i18n.t('profile.msg.updated'),
           toast: true,
           position: 'top-end',
           showConfirmButton: false,
@@ -105,10 +107,10 @@ export class ProfileComponent implements OnInit {
           (Array.isArray(err?.error?.errors) ? err.error.errors.join(', ') : null) ||
           err?.error?.message ||
           err?.error?.Message ||
-          'Please restart the API and try again.';
+          this.i18n.t('profile.msg.updateFailedText');
         Swal.fire({
           icon: 'error',
-          title: 'Update failed',
+          title: this.i18n.t('profile.msg.updateFailed'),
           text: msg
         });
       }
@@ -120,7 +122,7 @@ export class ProfileComponent implements OnInit {
 
     const { currentPassword, newPassword, confirmPassword } = this.passwordForm.value;
     if (newPassword !== confirmPassword) {
-      Swal.fire({ icon: 'warning', title: 'Passwords do not match' });
+      Swal.fire({ icon: 'warning', title: this.i18n.t('profile.msg.passwordMismatch') });
       return;
     }
 
@@ -131,16 +133,16 @@ export class ProfileComponent implements OnInit {
         this.passwordForm.reset();
         Swal.fire({
           icon: 'success',
-          title: 'Password changed',
-          text: res?.message || 'Your password was updated.'
+          title: this.i18n.t('profile.msg.passwordChanged'),
+          text: this.i18n.t('profile.msg.passwordChangedText')
         });
       },
       error: (err) => {
         this.isChangingPassword = false;
         Swal.fire({
           icon: 'error',
-          title: 'Could not change password',
-          text: err?.error?.message || err?.error?.errors?.[0] || 'Check your current password and try again.'
+          title: this.i18n.t('profile.msg.passwordFailed'),
+          text: err?.error?.message || err?.error?.errors?.[0] || this.i18n.t('profile.msg.passwordFailedText')
         });
       }
     });

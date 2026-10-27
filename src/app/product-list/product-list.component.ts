@@ -10,6 +10,7 @@ import { Category } from '../shared/models/category';
 import { ShopParams } from '../shared/models/shopParams';
 import { TranslatePipe } from '../core/i18n/translate.pipe';
 import { LocFieldPipe } from '../core/i18n/loc-field.pipe';
+import { I18nService } from '../core/i18n/i18n.service';
 
 @Component({
     selector: 'app-product-list',
@@ -30,11 +31,12 @@ export class ProductListComponent implements OnInit, AfterViewInit {
     private pendingFragment: string | null = null;
 
     sortOptions = [
-        { name: 'Alphabetical', value: 'name' },
-        { name: 'Price: Low to High', value: 'PriceAsc' },
-        { name: 'Price: High to Low', value: 'PriceDesc' },
+        { labelKey: 'shop.sort.name', value: 'name' },
+        { labelKey: 'shop.sort.priceAsc', value: 'PriceAsc' },
+        { labelKey: 'shop.sort.priceDesc', value: 'PriceDesc' },
     ];
 
+    i18n = inject(I18nService);
     productService = inject(ProductService);
     basketService = inject(BasketService);
     route = inject(ActivatedRoute);
@@ -169,10 +171,10 @@ export class ProductListComponent implements OnInit, AfterViewInit {
         if (!product.hasActiveOffer || !product.offerEndUtc) return null;
         const end = new Date(product.offerEndUtc).getTime();
         const diff = end - Date.now();
-        if (diff <= 0) return 'Ending soon';
+        if (diff <= 0) return this.i18n.t('shop.offerEndingSoon');
         const hours = Math.floor(diff / 3_600_000);
-        if (hours < 24) return `${Math.max(1, hours)}h left`;
+        if (hours < 24) return this.i18n.t('shop.offerHoursLeft', { count: Math.max(1, hours) });
         const days = Math.floor(hours / 24);
-        return `${days}d left`;
+        return this.i18n.t('shop.offerDaysLeft', { count: days });
     }
 }

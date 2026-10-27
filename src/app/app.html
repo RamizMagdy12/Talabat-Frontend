@@ -5,7 +5,7 @@
 
   <header class="site-nav" *ngIf="!isAuthRoute">
     <div class="site-nav__inner">
-      <a routerLink="/" class="brand" [attr.aria-label]="('app.name' | t) + ' home'" (click)="menuOpen = false">
+      <a routerLink="/" class="brand" [attr.aria-label]="'nav.home' | t:{ name: i18n.t('app.name') }" (click)="menuOpen = false">
         <span class="brand__mark">T</span>
         <span class="brand__text">
           <strong>{{ 'app.name' | t }}</strong>
@@ -17,7 +17,7 @@
         <span></span><span></span><span></span>
       </button>
 
-      <nav class="site-nav__links" [class.is-open]="menuOpen" aria-label="Primary">
+      <nav class="site-nav__links" [class.is-open]="menuOpen" [attr.aria-label]="'nav.primary' | t">
         <a routerLink="/products" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="menuOpen = false">{{ 'nav.shop' | t }}</a>
         <a routerLink="/products" fragment="offers" class="nav-link" (click)="menuOpen = false">{{ 'nav.offers' | t }}</a>
         <a routerLink="/products" fragment="bestsellers" class="nav-link" (click)="menuOpen = false">{{ 'nav.bestsellers' | t }}</a>
@@ -73,7 +73,7 @@
   <footer class="site-footer" *ngIf="!isAuthRoute">
     <div class="site-footer__inner">
       <div class="site-footer__brand">
-        <a routerLink="/" class="brand" [attr.aria-label]="('app.name' | t) + ' home'">
+        <a routerLink="/" class="brand" [attr.aria-label]="'nav.home' | t:{ name: i18n.t('app.name') }">
           <span class="brand__mark">T</span>
           <span class="brand__text">
             <strong>{{ 'app.name' | t }}</strong>

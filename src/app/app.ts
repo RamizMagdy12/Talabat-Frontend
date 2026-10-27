@@ -5,6 +5,7 @@ import { BasketService } from './core/services/basket.service';
 import { AccountService } from './account/account.service';
 import { I18nService } from './core/i18n/i18n.service';
 import { TranslatePipe } from './core/i18n/translate.pipe';
+import { registerSwalLabels } from './core/swal-theme';
 import { filter } from 'rxjs';
 
 @Component({
@@ -26,6 +27,10 @@ export class App implements OnInit {
     public i18n: I18nService,
     private router: Router
   ) {
+    registerSwalLabels(() => ({
+      ok: this.i18n.t('common.ok'),
+      cancel: this.i18n.t('common.cancel')
+    }));
     this.loadCurrentUser();
     this.isAuthRoute = this.isAuthOnlyRoute(this.router.url);
     this.router.events

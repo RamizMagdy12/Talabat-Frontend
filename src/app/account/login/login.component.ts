@@ -5,6 +5,7 @@ import { AccountService } from '../account.service';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
+import { I18nService } from '../../core/i18n/i18n.service';
 
 @Component({
     selector: 'app-login',
@@ -16,6 +17,7 @@ import { TranslatePipe } from '../../core/i18n/translate.pipe';
 export class LoginComponent {
     accountService = inject(AccountService);
     router = inject(Router);
+    i18n = inject(I18nService);
     showPassword = false;
 
     loginForm = new FormGroup({
@@ -30,7 +32,7 @@ export class LoginComponent {
             next: () => {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Login Successful',
+                    title: this.i18n.t('login.msg.success'),
                     toast: true,
                     position: 'top-end',
                     showConfirmButton: false,
@@ -42,8 +44,8 @@ export class LoginComponent {
             error: (error) => {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Login Failed',
-                    text: 'Invalid email or password'
+                    title: this.i18n.t('login.msg.failed'),
+                    text: this.i18n.t('login.msg.invalid')
                 });
             }
         });

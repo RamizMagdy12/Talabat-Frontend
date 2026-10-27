@@ -6,7 +6,7 @@
                 <span *ngIf="currentStep <= 1">1</span>
                 <svg *ngIf="currentStep > 1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <span class="step-label">Shipping</span>
+            <span class="step-label">{{ 'checkout.stepShipping' | t }}</span>
         </div>
         <div class="stepper-line" [class.active]="currentStep > 1"></div>
         <div class="stepper-step" [class.active]="currentStep >= 2" [class.completed]="currentStep > 2" (click)="goToStep(2)">
@@ -14,7 +14,7 @@
                 <span *ngIf="currentStep <= 2">2</span>
                 <svg *ngIf="currentStep > 2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <span class="step-label">Delivery</span>
+            <span class="step-label">{{ 'checkout.stepDelivery' | t }}</span>
         </div>
         <div class="stepper-line" [class.active]="currentStep > 2"></div>
         <div class="stepper-step" [class.active]="currentStep >= 3" [class.completed]="currentStep > 3" (click)="goToStep(3)">
@@ -22,12 +22,12 @@
                 <span *ngIf="currentStep <= 3">3</span>
                 <svg *ngIf="currentStep > 3" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <span class="step-label">Payment</span>
+            <span class="step-label">{{ 'checkout.stepPayment' | t }}</span>
         </div>
         <div class="stepper-line" [class.active]="currentStep > 3"></div>
         <div class="stepper-step" [class.active]="currentStep >= 4" (click)="goToStep(4)">
             <div class="step-circle">4</div>
-            <span class="step-label">Review</span>
+            <span class="step-label">{{ 'checkout.stepReview' | t }}</span>
         </div>
     </div>
 
@@ -39,42 +39,42 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 </div>
                 <div>
-                    <h2 class="step-title">Shipping Address</h2>
-                    <p class="step-subtitle">Where should we deliver your order?</p>
+                    <h2 class="step-title">{{ 'checkout.address' | t }}</h2>
+                    <p class="step-subtitle">{{ 'checkout.addressSub' | t }}</p>
                 </div>
             </div>
 
             <div class="address-hint" *ngIf="addressFromProfile">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 <div>
-                    Filled from your saved profile — change any field if this order should go somewhere else.
-                    <a routerLink="/account/profile">Edit default address</a>
+                    {{ 'checkout.addressHint' | t }}
+                    <a routerLink="/account/profile">{{ 'checkout.editProfile' | t }}</a>
                 </div>
             </div>
 
             <div class="form-grid">
                 <div class="form-group">
-                    <label class="form-label" for="firstName">First Name</label>
+                    <label class="form-label" for="firstName">{{ 'checkout.firstName' | t }}</label>
                     <input id="firstName" class="form-input" type="text" [(ngModel)]="address.firstName" (input)="onAddressEdited()" placeholder="John" />
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="lastName">Last Name</label>
+                    <label class="form-label" for="lastName">{{ 'checkout.lastName' | t }}</label>
                     <input id="lastName" class="form-input" type="text" [(ngModel)]="address.lastName" (input)="onAddressEdited()" placeholder="Doe" />
                 </div>
                 <div class="form-group form-group--full">
-                    <label class="form-label" for="street">Street Address</label>
+                    <label class="form-label" for="street">{{ 'checkout.street' | t }}</label>
                     <input id="street" class="form-input" type="text" [(ngModel)]="address.street" (input)="onAddressEdited()" placeholder="123 Main Street" />
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="city">City</label>
+                    <label class="form-label" for="city">{{ 'checkout.city' | t }}</label>
                     <input id="city" class="form-input" type="text" [(ngModel)]="address.city" (input)="onAddressEdited()" placeholder="Cairo" />
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="country">Country</label>
+                    <label class="form-label" for="country">{{ 'checkout.country' | t }}</label>
                     <input id="country" class="form-input" type="text" [(ngModel)]="address.country" (input)="onAddressEdited()" placeholder="Egypt" />
                 </div>
                 <div class="form-group form-group--full">
-                    <label class="form-label" for="phoneNumber">Phone</label>
+                    <label class="form-label" for="phoneNumber">{{ 'checkout.phone' | t }}</label>
                     <input id="phoneNumber" class="form-input" type="tel" [(ngModel)]="address.phoneNumber" (input)="onAddressEdited()" placeholder="01xxxxxxxxx" />
                 </div>
             </div>
@@ -82,10 +82,10 @@
             <div class="step-actions">
                 <a routerLink="/basket" class="btn-back">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                    Back to Basket
+                    {{ 'checkout.backBasket' | t }}
                 </a>
                 <button class="btn-next" (click)="nextStep()">
-                    Continue to Delivery
+                    {{ 'checkout.continueDelivery' | t }}
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </button>
             </div>
@@ -100,8 +100,8 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                 </div>
                 <div>
-                    <h2 class="step-title">Delivery Method</h2>
-                    <p class="step-subtitle">Choose your preferred shipping speed</p>
+                    <h2 class="step-title">{{ 'checkout.delivery' | t }}</h2>
+                    <p class="step-subtitle">{{ 'checkout.deliverySub' | t }}</p>
                 </div>
             </div>
 
@@ -130,10 +130,10 @@
             <div class="step-actions">
                 <button class="btn-back" (click)="prevStep()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                    Back
+                    {{ 'checkout.back' | t }}
                 </button>
                 <button class="btn-next" (click)="nextStep()">
-                    Continue to Payment
+                    {{ 'checkout.continuePayment' | t }}
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </button>
             </div>
@@ -149,15 +149,15 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
                 </div>
                 <div>
-                    <h2 class="step-title">Payment Details</h2>
-                    <p class="step-subtitle">Enter your card information securely</p>
+                    <h2 class="step-title">{{ 'checkout.paymentDetails' | t }}</h2>
+                    <p class="step-subtitle">{{ 'checkout.paymentSub' | t }}</p>
                 </div>
             </div>
 
             <!-- Loading State -->
            <div class="payment-loading" *ngIf="isLoadingPayment">
     <div class="payment-loading-spinner"></div>
-    <p class="payment-loading-text">Setting up secure payment...</p>
+    <p class="payment-loading-text">{{ 'checkout.paymentLoading' | t }}</p>
 </div>
 
 <!-- Card Input — ✅ دايماً موجود في الـ DOM -->
@@ -170,11 +170,11 @@
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
         </svg>
-        <span>Secured by <strong>Stripe</strong> — 256-bit SSL encryption</span>
+        <span>{{ 'checkout.stripeBadge' | t }} <strong>Stripe</strong> {{ 'checkout.stripeSsl' | t }}</span>
     </div>
 
     <div class="card-element-wrapper">
-        <label class="form-label">Card Number, Expiry &amp; CVC</label>
+        <label class="form-label">{{ 'checkout.cardLabel' | t }}</label>
         <div id="card-element" class="stripe-card-element"></div>
     </div>
 
@@ -185,11 +185,11 @@
 
     <div class="card-success" *ngIf="cardComplete && !cardErrors">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        Card details are valid — ready to continue
+        {{ 'checkout.cardValid' | t }}
     </div>
 
     <div class="accepted-cards">
-        <span class="accepted-label">We accept</span>
+        <span class="accepted-label">{{ 'checkout.weAccept' | t }}</span>
         <div class="card-brands">
             <div class="card-brand">
                 <svg viewBox="0 0 38 24" width="38" height="24"><rect fill="#1434CB" width="38" height="24" rx="3"/><text x="19" y="15" text-anchor="middle" fill="white" font-size="9" font-weight="bold" font-family="Arial">VISA</text></svg>
@@ -207,10 +207,10 @@
             <div class="step-actions">
                 <button class="btn-back" (click)="prevStep()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                    Back
+                    {{ 'checkout.back' | t }}
                 </button>
                 <button class="btn-next" (click)="nextStep()" [disabled]="!cardComplete || isLoadingPayment">
-                    Review Order
+                    {{ 'checkout.reviewOrder' | t }}
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </button>
             </div>
@@ -227,8 +227,8 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                     </div>
                     <div>
-                        <h2 class="step-title">Order Items</h2>
-                        <p class="step-subtitle">{{basketItems.length}} item(s) in your order</p>
+                        <h2 class="step-title">{{ 'order.orderItems' | t }}</h2>
+                        <p class="step-subtitle">{{ 'checkout.itemsInOrder' | t:{ count: basketItems.length } }}</p>
                     </div>
                 </div>
 
@@ -237,7 +237,7 @@
                         <img [src]="item.productUrl" [alt]="item.productName" class="review-item-img" />
                         <div class="review-item-info">
                             <h4 class="review-item-name">{{item.productName}}</h4>
-                            <span class="review-item-qty">Qty: {{item.quantity}}</span>
+                            <span class="review-item-qty">{{ 'checkout.qty' | t }}: {{item.quantity}}</span>
                         </div>
                         <span class="review-item-price">{{item.price * item.quantity | currency}}</span>
                     </div>
@@ -250,7 +250,7 @@
                 <div class="summary-card">
                     <h3 class="summary-card-title">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        Shipping To
+                        {{ 'checkout.shippingTo' | t }}
                     </h3>
                     <p class="summary-text">{{address.firstName}} {{address.lastName}}</p>
                     <p class="summary-text">{{address.phoneNumber}}</p>
@@ -262,7 +262,7 @@
                 <div class="summary-card" *ngIf="selectedDeliveryMethod">
                     <h3 class="summary-card-title">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                        Delivery
+                        {{ 'order.delivery' | t }}
                     </h3>
                     <p class="summary-text">{{selectedDeliveryMethod.shortName}}</p>
                     <p class="summary-text-muted">{{selectedDeliveryMethod.deliveryTime}}</p>
@@ -272,26 +272,26 @@
                 <div class="summary-card summary-card--payment">
                     <h3 class="summary-card-title">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-                        Payment
+                        {{ 'checkout.payment' | t }}
                     </h3>
                     <div class="payment-confirmed-badge">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                        Card details verified
+                        {{ 'checkout.cardVerified' | t }}
                     </div>
                 </div>
 
                 <!-- Totals -->
                 <div class="summary-card summary-totals">
                     <div class="total-row">
-                        <span>Subtotal</span>
+                        <span>{{ 'basket.subtotal' | t }}</span>
                         <span>{{basketSubtotal | currency}}</span>
                     </div>
                     <div class="total-row">
-                        <span>Shipping</span>
+                        <span>{{ 'basket.shipping' | t }}</span>
                         <span>{{deliveryCost | currency}}</span>
                     </div>
                     <div class="total-row total-row--grand">
-                        <span>Total</span>
+                        <span>{{ 'orders.total' | t }}</span>
                         <span>{{orderTotal | currency}}</span>
                     </div>
                 </div>
@@ -301,17 +301,17 @@
                      [disabled]="isSubmitting || !cardReady">
                      <span *ngIf="!isSubmitting">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                        Pay &amp; Place Order — {{orderTotal | currency}}
+                        {{ 'checkout.payPlace' | t }} — {{orderTotal | currency}}
                     </span>
                     <span *ngIf="isSubmitting" class="spinner-text">
                         <span class="spinner"></span>
-                        Processing Payment...
+                        {{ 'checkout.processing' | t }}
                     </span>
                 </button>
 
                 <button class="btn-back btn-back--full" (click)="prevStep()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                    Back to Payment
+                    {{ 'checkout.backPayment' | t }}
                 </button>
             </div>
         </div>

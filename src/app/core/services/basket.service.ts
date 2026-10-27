@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { I18nService } from '../i18n/i18n.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -17,6 +18,8 @@ export class BasketService {
     basketSource$ = this.basketSource.asObservable();
     private basketTotalSource = new BehaviorSubject<BasketTotals | null>(null);
     basketTotalSource$ = this.basketTotalSource.asObservable();
+
+    private i18n = inject(I18nService);
 
     constructor(private http: HttpClient, private router: Router) { }
 
@@ -61,10 +64,10 @@ export class BasketService {
         if (!token) {
             void Swal.fire({
                 icon: 'warning',
-                title: 'Sign in required',
-                text: 'You must be logged in to add items to your cart.',
-                confirmButtonText: 'Go to Login',
-                cancelButtonText: 'Cancel',
+                title: this.i18n.t('basket.msg.signInTitle'),
+                text: this.i18n.t('basket.msg.signInText'),
+                confirmButtonText: this.i18n.t('basket.msg.goLogin'),
+                cancelButtonText: this.i18n.t('common.cancel'),
                 showCancelButton: true,
                 allowOutsideClick: true
             }).then((result) => {
@@ -86,7 +89,7 @@ export class BasketService {
                     toast: true,
                     position: 'top-end',
                     icon: 'success',
-                    title: 'Item added to your cart',
+                    title: this.i18n.t('basket.msg.added'),
                     showConfirmButton: false,
                     timer: 1800,
                     timerProgressBar: true
@@ -124,12 +127,12 @@ export class BasketService {
         if (!basket) return;
         if (basket.items.some(x => x.id === item.id)) {
             Swal.fire({
-                title: 'Remove item?',
-                text: 'Do you want to remove this item from the cart?',
+                title: this.i18n.t('basket.msg.removeTitle'),
+                text: this.i18n.t('basket.msg.removeText'),
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, remove it',
-                cancelButtonText: 'Keep it'
+                confirmButtonText: this.i18n.t('basket.msg.removeYes'),
+                cancelButtonText: this.i18n.t('basket.msg.removeKeep')
             }).then((result) => {
                 if (result.isConfirmed) {
                     basket.items = basket.items.filter(i => i.id !== item.id);
@@ -137,8 +140,8 @@ export class BasketService {
                         this.setBasket(basket).subscribe({
                             next: () => {
                                 Swal.fire(
-                                    'Removed!',
-                                    'Item has been removed from your cart.',
+                                    this.i18n.t('basket.msg.removedTitle'),
+                                    this.i18n.t('basket.msg.removedText'),
                                     'success'
                                 );
                             }
@@ -147,8 +150,8 @@ export class BasketService {
                         this.deleteBasket(basket.id).subscribe({
                             next: () => {
                                 Swal.fire(
-                                    'Removed!',
-                                    'Item has been removed from your cart.',
+                                    this.i18n.t('basket.msg.removedTitle'),
+                                    this.i18n.t('basket.msg.removedText'),
                                     'success'
                                 );
                             }
@@ -218,8 +221,8 @@ export class BasketService {
         return (item as Product).pictureUrl !== undefined;
     }
 
-    private handleError(error: HttpErrorResponse) {
+    private handleError = (error: HttpErrorResponse) => {
         console.error('An error occurred:', error.message);
-        return throwError(() => new Error('Something bad happened; please try again later.'));
-    }
+        return throwError(() => new Error(this.i18n.t('basket.msg.error')));
+    };
 }

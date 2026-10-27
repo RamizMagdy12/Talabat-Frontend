@@ -5,17 +5,20 @@ import { AccountService } from '../account.service';
 import { Router, RouterModule } from '@angular/router';
 import { map, finalize } from 'rxjs';
 import Swal from 'sweetalert2';
+import { TranslatePipe } from '../../core/i18n/translate.pipe';
+import { I18nService } from '../../core/i18n/i18n.service';
 
 @Component({
     selector: 'app-register',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, RouterModule],
+    imports: [CommonModule, ReactiveFormsModule, RouterModule, TranslatePipe],
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
     accountService = inject(AccountService);
     router = inject(Router);
+    i18n = inject(I18nService);
     showPassword = false;
 
     registerForm = new FormGroup({
@@ -36,7 +39,7 @@ export class RegisterComponent {
             next: () => {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Registration Successful',
+                    title: this.i18n.t('register.msg.success'),
                     toast: true,
                     position: 'top-end',
                     showConfirmButton: false,
@@ -51,8 +54,8 @@ export class RegisterComponent {
     
     Swal.fire({
         icon: 'error',
-        title: 'Registration Failed',
-        text: error.error?.errors?.join(', ') || error.error?.message || 'Something went wrong'
+        title: this.i18n.t('register.msg.failed'),
+        text: error.error?.errors?.join(', ') || error.error?.message || this.i18n.t('common.error')
     });
 }
         });

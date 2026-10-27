@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { BasketService } from '../core/services/basket.service';
 import { BasketItem } from '../shared/models/basket';
 import { RouterModule } from '@angular/router';
+import { TranslatePipe } from '../core/i18n/translate.pipe';
 
 @Component({
     selector: 'app-basket',
     standalone: true,
-    imports: [CommonModule, RouterModule],
+    imports: [CommonModule, RouterModule, TranslatePipe],
     templateUrl: './basket.component.html',
     styleUrls: ['./basket.component.css']
 })

@@ -94,48 +94,44 @@
     </div>
 
     <div class="filter-block">
-      <span class="filter-label">Brand</span>
+      <span class="filter-label">{{ 'shop.brand' | t }}</span>
       <div class="chip-row">
         <button type="button" *ngFor="let brand of brands" class="chip"
           [class.is-active]="brand.id === shopParams.brandId"
           (click)="onBrandSelected(brand.id)">
-          {{ brand.name | locField: brand.nameAr }}
+          {{ brand.id === 0 ? ('shop.all' | t) : (brand.name | locField: brand.nameAr) }}
         </button>
       </div>
     </div>
 
     <div class="filter-block">
-      <span class="filter-label">Category</span>
+      <span class="filter-label">{{ 'shop.category' | t }}</span>
       <div class="chip-row">
         <button type="button" *ngFor="let category of categories" class="chip"
           [class.is-active]="category.id === shopParams.categoryId"
           (click)="onCategorySelected(category.id)">
-          {{ category.name | locField: category.nameAr }}
+          {{ category.id === 0 ? ('shop.all' | t) : (category.name | locField: category.nameAr) }}
         </button>
       </div>
     </div>
 
     <div class="filter-toolbar">
       <label class="filter-sort">
-        <span class="filter-label">Sort</span>
+        <span class="filter-label">{{ 'shop.sort' | t }}</span>
         <select (change)="onSortSelected($event)">
-          <option *ngFor="let sort of sortOptions" [value]="sort.value">{{ sort.name }}</option>
+          <option *ngFor="let sort of sortOptions" [value]="sort.value">{{ sort.labelKey | t }}</option>
         </select>
       </label>
       <div class="filter-actions">
-        <button type="button" class="btn-solid" (click)="onSearch()">Search</button>
-        <button type="button" class="btn-ghost" (click)="onReset()">Reset</button>
+        <button type="button" class="btn-solid" (click)="onSearch()">{{ 'shop.searchBtn' | t }}</button>
+        <button type="button" class="btn-ghost" (click)="onReset()">{{ 'shop.reset' | t }}</button>
       </div>
     </div>
   </div>
 
   <div class="results-meta">
     <span *ngIf="totalCount > 0">
-      Showing
-      <strong>{{ (shopParams.pageIndex - 1) * shopParams.pageSize + 1 }}–{{
-        shopParams.pageIndex * shopParams.pageSize > totalCount ? totalCount : shopParams.pageIndex * shopParams.pageSize
-      }}</strong>
-      of <strong>{{ totalCount }}</strong>
+      {{ 'shop.showing' | t:{ from: (shopParams.pageIndex - 1) * shopParams.pageSize + 1, to: (shopParams.pageIndex * shopParams.pageSize > totalCount ? totalCount : shopParams.pageIndex * shopParams.pageSize), total: totalCount } }}
     </span>
     <span *ngIf="totalCount === 0">{{ 'shop.empty' | t }}</span>
   </div>
@@ -173,15 +169,15 @@
 
   <ng-template #emptyState>
     <div class="empty-state">
-      <h3>Nothing here yet</h3>
-      <p>Try clearing filters or searching another keyword.</p>
-      <button type="button" class="btn-solid" (click)="onReset()">Clear filters</button>
+      <h3>{{ 'shop.emptyTitle' | t }}</h3>
+      <p>{{ 'shop.emptyHint' | t }}</p>
+      <button type="button" class="btn-solid" (click)="onReset()">{{ 'shop.clearFilters' | t }}</button>
     </div>
   </ng-template>
 
-  <nav class="pager" *ngIf="totalCount > 0" aria-label="Pagination">
+  <nav class="pager" *ngIf="totalCount > 0" [attr.aria-label]="'shop.pagination' | t">
     <button type="button" class="pager-btn" [disabled]="shopParams.pageIndex === 1"
-      (click)="shopParams.pageIndex > 1 && onPageChanged(shopParams.pageIndex - 1)">Prev</button>
+      (click)="shopParams.pageIndex > 1 && onPageChanged(shopParams.pageIndex - 1)">{{ 'shop.prev' | t }}</button>
 
     <ng-container *ngFor="let page of pagesArray">
       <button type="button" class="pager-btn"
@@ -193,6 +189,6 @@
     </ng-container>
 
     <button type="button" class="pager-btn" [disabled]="shopParams.pageIndex === totalPages"
-      (click)="shopParams.pageIndex < totalPages && onPageChanged(shopParams.pageIndex + 1)">Next</button>
+      (click)="shopParams.pageIndex < totalPages && onPageChanged(shopParams.pageIndex + 1)">{{ 'shop.next' | t }}</button>
   </nav>
 </section>

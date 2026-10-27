@@ -5,11 +5,12 @@ import { ProductService } from '../core/services/product.service';
 import { BasketService } from '../core/services/basket.service';
 import { Product } from '../shared/models/product';
 import { LocFieldPipe } from '../core/i18n/loc-field.pipe';
+import { TranslatePipe } from '../core/i18n/translate.pipe';
 
 @Component({
     selector: 'app-product-details',
     standalone: true,
-    imports: [CommonModule, RouterModule, LocFieldPipe],
+    imports: [CommonModule, RouterModule, LocFieldPipe, TranslatePipe],
     templateUrl: './product-details.component.html',
     styleUrls: ['./product-details.component.css']
 })

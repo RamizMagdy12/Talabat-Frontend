@@ -22,16 +22,25 @@ const toastClass = {
 
 const originalFire = Swal.fire.bind(Swal);
 
+type SwalLabels = { ok: string; cancel: string };
+let labelsProvider: () => SwalLabels = () => ({ ok: 'OK', cancel: 'Cancel' });
+
+/** Lets the app supply localized default OK/Cancel button labels (see App constructor). */
+export function registerSwalLabels(provider: () => SwalLabels): void {
+  labelsProvider = provider;
+}
+
 function mergeOptions(options: SweetAlertOptions): SweetAlertOptions {
   const isToast = options.toast === true;
   const baseClass = isToast ? toastClass : dialogClass;
   const incoming = (options.customClass ?? {}) as Record<string, string>;
+  const labels = labelsProvider();
 
   return {
     buttonsStyling: false,
     reverseButtons: true,
-    confirmButtonText: options.confirmButtonText ?? 'OK',
-    cancelButtonText: options.cancelButtonText ?? 'Cancel',
+    confirmButtonText: options.confirmButtonText ?? labels.ok,
+    cancelButtonText: options.cancelButtonText ?? labels.cancel,
     ...options,
     customClass: {
       ...baseClass,

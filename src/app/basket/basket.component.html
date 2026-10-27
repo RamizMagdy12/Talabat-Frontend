@@ -1,17 +1,17 @@
 <section class="basket-page">
   <header class="basket-head">
     <div>
-      <p class="shop-kicker">Your basket</p>
-      <h1>Ready to checkout?</h1>
+      <p class="shop-kicker">{{ 'basket.title' | t }}</p>
+      <h1>{{ 'basket.ready' | t }}</h1>
     </div>
-    <a routerLink="/products" class="btn-ghost">Continue shopping</a>
+    <a routerLink="/products" class="btn-ghost">{{ 'basket.continue' | t }}</a>
   </header>
 
   <ng-container *ngIf="basketService.basketSource$ | async as basket; else emptyBasket">
     <div class="basket-empty" *ngIf="!basket.items?.length">
-      <h2>Your basket is empty</h2>
-      <p>Browse the store and add something delicious.</p>
-      <a routerLink="/products" class="btn-solid">Browse products</a>
+      <h2>{{ 'basket.empty' | t }}</h2>
+      <p>{{ 'basket.emptyHint' | t }}</p>
+      <a routerLink="/products" class="btn-solid">{{ 'basket.browse' | t }}</a>
     </div>
 
     <div class="basket-layout" *ngIf="basket.items?.length">
@@ -24,41 +24,41 @@
             <strong class="basket-item__price">{{ item.price | currency }}</strong>
           </div>
           <div class="basket-item__qty">
-            <button type="button" (click)="decrementQuantity(item)" aria-label="Decrease">−</button>
+            <button type="button" (click)="decrementQuantity(item)" [attr.aria-label]="'basket.decrease' | t">−</button>
             <span>{{ item.quantity }}</span>
-            <button type="button" (click)="incrementQuantity(item)" aria-label="Increase">+</button>
+            <button type="button" (click)="incrementQuantity(item)" [attr.aria-label]="'basket.increase' | t">+</button>
           </div>
           <div class="basket-item__total">
             <strong>{{ item.price * item.quantity | currency }}</strong>
-            <button type="button" class="link-danger" (click)="removeItem(item)">Remove</button>
+            <button type="button" class="link-danger" (click)="removeItem(item)">{{ 'basket.remove' | t }}</button>
           </div>
         </article>
       </div>
 
       <aside class="basket-summary" *ngIf="basketService.basketTotalSource$ | async as totals">
-        <h2>Order summary</h2>
+        <h2>{{ 'basket.summary' | t }}</h2>
         <div class="summary-row">
-          <span>Subtotal</span>
+          <span>{{ 'basket.subtotal' | t }}</span>
           <strong>{{ totals.subtotal | currency }}</strong>
         </div>
         <div class="summary-row">
-          <span>Shipping</span>
+          <span>{{ 'basket.shipping' | t }}</span>
           <strong>{{ totals.shipping | currency }}</strong>
         </div>
         <div class="summary-row summary-row--total">
-          <span>Total</span>
+          <span>{{ 'orders.total' | t }}</span>
           <strong>{{ totals.total | currency }}</strong>
         </div>
-        <a routerLink="/checkout" class="btn-solid btn-block">Proceed to checkout</a>
+        <a routerLink="/checkout" class="btn-solid btn-block">{{ 'basket.proceed' | t }}</a>
       </aside>
     </div>
   </ng-container>
 
   <ng-template #emptyBasket>
     <div class="basket-empty">
-      <h2>Your basket is empty</h2>
-      <p>Browse the store and add something delicious.</p>
-      <a routerLink="/products" class="btn-solid">Browse products</a>
+      <h2>{{ 'basket.empty' | t }}</h2>
+      <p>{{ 'basket.emptyHint' | t }}</p>
+      <a routerLink="/products" class="btn-solid">{{ 'basket.browse' | t }}</a>
     </div>
   </ng-template>
 </section>

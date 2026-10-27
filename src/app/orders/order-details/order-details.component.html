@@ -8,7 +8,7 @@
             <line x1="19" y1="12" x2="5" y2="12"/>
             <polyline points="12 19 5 12 12 5"/>
         </svg>
-        Back to Orders
+        {{ 'order.back' | t }}
     </a>
 
     <!-- Header -->
@@ -54,7 +54,7 @@
                 <div class="timeline-dot">
                     <svg *ngIf="getStepProgress(order.status) > 1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
-                <span class="timeline-label">Placed</span>
+                <span class="timeline-label">{{ 'order.timeline.placed' | t }}</span>
             </div>
 
             <div class="timeline-line" [class.active]="getStepProgress(order.status) >= 2"></div>
@@ -67,7 +67,7 @@
                     <svg *ngIf="isFailed(order.status)" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                     <svg *ngIf="getStepProgress(order.status) > 2 && !isFailed(order.status)" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
-                <span class="timeline-label">{{ isFailed(order.status) ? 'Payment Failed' : 'Paid' }}</span>
+                <span class="timeline-label">{{ (isFailed(order.status) ? 'orders.status.paymentFailed' : 'order.timeline.paid') | t }}</span>
             </div>
 
             <div class="timeline-line" [class.active]="getStepProgress(order.status) >= 3 && !isFailed(order.status)"></div>
@@ -78,7 +78,7 @@
                 <div class="timeline-dot">
                     <svg *ngIf="getStepProgress(order.status) > 3" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
-                <span class="timeline-label">Preparing</span>
+                <span class="timeline-label">{{ 'order.timeline.preparing' | t }}</span>
             </div>
 
             <div class="timeline-line" [class.active]="getStepProgress(order.status) >= 4 && !isFailed(order.status)"></div>
@@ -89,7 +89,7 @@
                 <div class="timeline-dot">
                     <svg *ngIf="getStepProgress(order.status) > 4" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
-                <span class="timeline-label">On the Way</span>
+                <span class="timeline-label">{{ 'order.timeline.onTheWay' | t }}</span>
             </div>
 
             <div class="timeline-line" [class.active]="getStepProgress(order.status) >= 5 && !isFailed(order.status)"></div>
@@ -100,7 +100,7 @@
                 <div class="timeline-dot">
                     <svg *ngIf="getStepProgress(order.status) >= 5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
-                <span class="timeline-label">Delivered</span>
+                <span class="timeline-label">{{ 'order.timeline.delivered' | t }}</span>
             </div>
         </div>
     </div>
@@ -127,7 +127,7 @@
 
                 </svg>
 
-                Order Items
+                {{ 'order.orderItems' | t }}
 
                 <span class="item-count">
                     {{order.items.length}}
@@ -139,10 +139,10 @@
 
                 <div class="item-row item-header">
 
-                    <span class="col-product">Product</span>
-                    <span class="col-price">Price</span>
-                    <span class="col-qty">Qty</span>
-                    <span class="col-total">Total</span>
+                    <span class="col-product">{{ 'order.product' | t }}</span>
+                    <span class="col-price">{{ 'order.price' | t }}</span>
+                    <span class="col-qty">{{ 'order.qty' | t }}</span>
+                    <span class="col-total">{{ 'order.lineTotal' | t }}</span>
 
                 </div>
 
@@ -162,7 +162,7 @@
                             </span>
 
                             <span class="item-id">
-                                ID: {{item.productId}}
+                                {{ 'order.productId' | t:{ id: item.productId } }}
                             </span>
 
                         </div>
@@ -208,7 +208,7 @@
 
                     </svg>
 
-                    Shipping Address
+                    {{ 'order.shipping' | t }}
 
                 </h3>
 
@@ -256,7 +256,7 @@
 
                     </svg>
 
-                    Delivery Method
+                    {{ 'checkout.delivery' | t }}
 
                 </h3>
 
@@ -267,7 +267,7 @@
                     </p>
 
                     <p class="info-muted">
-                        Shipping cost:
+                        {{ 'order.shippingCost' | t }}
                         {{order.deliveryMethodCost | currency}}
                     </p>
 
@@ -293,7 +293,7 @@
 
                     </svg>
 
-                    Order Summary
+                    {{ 'order.summary' | t }}
 
                 </h3>
 
@@ -301,21 +301,21 @@
 
                     <div class="summary-row">
 
-                        <span>Subtotal</span>
+                        <span>{{ 'basket.subtotal' | t }}</span>
                         <span>{{order.subtotal | currency}}</span>
 
                     </div>
 
                     <div class="summary-row">
 
-                        <span>Shipping</span>
+                        <span>{{ 'basket.shipping' | t }}</span>
                         <span>{{order.deliveryMethodCost | currency}}</span>
 
                     </div>
 
                     <div class="summary-row summary-row--total">
 
-                        <span>Total</span>
+                        <span>{{ 'orders.total' | t }}</span>
                         <span>{{order.total | currency}}</span>
 
                     </div>
