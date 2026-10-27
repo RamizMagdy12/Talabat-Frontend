@@ -4,11 +4,12 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProductService } from '../core/services/product.service';
 import { BasketService } from '../core/services/basket.service';
 import { Product } from '../shared/models/product';
+import { LocFieldPipe } from '../core/i18n/loc-field.pipe';
 
 @Component({
     selector: 'app-product-details',
     standalone: true,
-    imports: [CommonModule, RouterModule],
+    imports: [CommonModule, RouterModule, LocFieldPipe],
     templateUrl: './product-details.component.html',
     styleUrls: ['./product-details.component.css']
 })

@@ -24,11 +24,11 @@
         <span class="offer-card__badge">{{ 'shop.sale' | t }}</span>
         <span class="offer-card__timer" *ngIf="offerEndsIn(product) as timer">{{ timer }}</span>
         <a class="offer-card__media" [routerLink]="['/products', product.id]">
-          <img [src]="product.pictureUrl" [alt]="product.name" loading="lazy" />
+          <img [src]="product.pictureUrl" [alt]="product.name | locField: product.nameAr" loading="lazy" />
         </a>
         <div class="offer-card__body">
-          <p class="product-card__brand">{{ product.brand || ('shop.brand' | t) }}</p>
-          <h3><a [routerLink]="['/products', product.id]">{{ product.name }}</a></h3>
+          <p class="product-card__brand">{{ (product.brand | locField: product.brandAr) || ('shop.brand' | t) }}</p>
+          <h3><a [routerLink]="['/products', product.id]">{{ product.name | locField: product.nameAr }}</a></h3>
           <div class="price-row">
             <span class="price-now">{{ displayPrice(product) | currency }}</span>
             <span class="price-was">{{ product.price | currency }}</span>
@@ -53,12 +53,12 @@
       <article class="product-card" *ngFor="let product of bestSellers">
         <span class="product-card__ribbon" *ngIf="product.hasActiveOffer">{{ 'shop.offer' | t }}</span>
         <a class="product-card__media" [routerLink]="['/products', product.id]">
-          <img [src]="product.pictureUrl" [alt]="product.name" loading="lazy" />
+          <img [src]="product.pictureUrl" [alt]="product.name | locField: product.nameAr" loading="lazy" />
         </a>
         <div class="product-card__body">
-          <p class="product-card__brand">{{ product.brand || ('shop.brand' | t) }}</p>
+          <p class="product-card__brand">{{ (product.brand | locField: product.brandAr) || ('shop.brand' | t) }}</p>
           <h2 class="product-card__name">
-            <a [routerLink]="['/products', product.id]">{{ product.name }}</a>
+            <a [routerLink]="['/products', product.id]">{{ product.name | locField: product.nameAr }}</a>
           </h2>
           <div class="product-card__footer">
             <div class="price-stack">
@@ -99,7 +99,7 @@
         <button type="button" *ngFor="let brand of brands" class="chip"
           [class.is-active]="brand.id === shopParams.brandId"
           (click)="onBrandSelected(brand.id)">
-          {{ brand.name }}
+          {{ brand.name | locField: brand.nameAr }}
         </button>
       </div>
     </div>
@@ -110,7 +110,7 @@
         <button type="button" *ngFor="let category of categories" class="chip"
           [class.is-active]="category.id === shopParams.categoryId"
           (click)="onCategorySelected(category.id)">
-          {{ category.name }}
+          {{ category.name | locField: category.nameAr }}
         </button>
       </div>
     </div>
@@ -144,12 +144,12 @@
     <article class="product-card" *ngFor="let product of products">
       <span class="product-card__ribbon" *ngIf="product.hasActiveOffer">{{ 'shop.offer' | t }}</span>
       <a class="product-card__media" [routerLink]="['/products', product.id]">
-        <img [src]="product.pictureUrl" [alt]="product.name" loading="lazy" />
+        <img [src]="product.pictureUrl" [alt]="product.name | locField: product.nameAr" loading="lazy" />
       </a>
       <div class="product-card__body">
-        <p class="product-card__brand">{{ product.brand || ('shop.brand' | t) }}</p>
+        <p class="product-card__brand">{{ (product.brand | locField: product.brandAr) || ('shop.brand' | t) }}</p>
         <h2 class="product-card__name">
-          <a [routerLink]="['/products', product.id]">{{ product.name }}</a>
+          <a [routerLink]="['/products', product.id]">{{ product.name | locField: product.nameAr }}</a>
         </h2>
         <div class="product-card__footer">
           <div class="price-stack">

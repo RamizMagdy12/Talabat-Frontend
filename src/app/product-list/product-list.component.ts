@@ -9,11 +9,12 @@ import { Brand } from '../shared/models/brand';
 import { Category } from '../shared/models/category';
 import { ShopParams } from '../shared/models/shopParams';
 import { TranslatePipe } from '../core/i18n/translate.pipe';
+import { LocFieldPipe } from '../core/i18n/loc-field.pipe';
 
 @Component({
     selector: 'app-product-list',
     standalone: true,
-    imports: [CommonModule, RouterModule, FormsModule, TranslatePipe],
+    imports: [CommonModule, RouterModule, FormsModule, TranslatePipe, LocFieldPipe],
     templateUrl: './product-list.component.html',
     styleUrls: ['./product-list.component.css']
 })

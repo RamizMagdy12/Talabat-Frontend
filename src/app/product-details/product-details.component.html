@@ -9,11 +9,11 @@
 
   <div class="detail-card">
     <div class="detail-media">
-      <img [src]="product.pictureUrl" [alt]="product.name" />
+      <img [src]="product.pictureUrl" [alt]="product.name | locField: product.nameAr" />
     </div>
     <div class="detail-info">
-      <p class="detail-brand">{{ product.brand }}</p>
-      <h1>{{ product.name }}</h1>
+      <p class="detail-brand">{{ product.brand | locField: product.brandAr }}</p>
+      <h1>{{ product.name | locField: product.nameAr }}</h1>
       <div class="detail-price-wrap" *ngIf="product.hasActiveOffer; else regularPrice">
         <p class="detail-price">{{ product.currentPrice || product.offerPrice | currency }}</p>
         <p class="detail-price-was">{{ product.price | currency }}</p>
@@ -25,11 +25,11 @@
         <p class="detail-price">{{ product.price | currency }}</p>
       </ng-template>
       <div class="detail-tags">
-        <span>{{ product.brand }}</span>
-        <span>{{ product.category }}</span>
+        <span>{{ product.brand | locField: product.brandAr }}</span>
+        <span>{{ product.category | locField: product.categoryAr }}</span>
         <span *ngIf="product.hasActiveOffer">On offer</span>
       </div>
-      <p class="detail-desc">{{ product.description }}</p>
+      <p class="detail-desc">{{ product.description | locField: product.descriptionAr }}</p>
       <div class="detail-actions">
         <button type="button" class="btn-solid" (click)="addItemToBasket()">Add to cart</button>
         <a routerLink="/products" class="btn-ghost">Keep shopping</a>
