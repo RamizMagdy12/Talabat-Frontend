@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 export class LoginComponent {
     accountService = inject(AccountService);
     router = inject(Router);
+    showPassword = false;
 
     loginForm = new FormGroup({
         email: new FormControl('', [Validators.required, Validators.email]),

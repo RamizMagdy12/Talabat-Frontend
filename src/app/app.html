@@ -18,6 +18,7 @@
         <a routerLink="/products" fragment="offers" class="nav-link" (click)="menuOpen = false">Offers</a>
         <a routerLink="/products" fragment="bestsellers" class="nav-link" (click)="menuOpen = false">Best sellers</a>
         <a *ngIf="accountService.currentUser$ | async" routerLink="/orders" routerLinkActive="is-active" class="nav-link" (click)="menuOpen = false">Orders</a>
+        <a *ngIf="accountService.currentUser$ | async" routerLink="/account/profile" routerLinkActive="is-active" class="nav-link" (click)="menuOpen = false">Profile</a>
         <a routerLink="/basket" routerLinkActive="is-active" class="nav-link nav-link--mobile" (click)="menuOpen = false">Basket</a>
         <ng-container *ngIf="(accountService.currentUser$ | async) as user; else guestMobile">
           <button type="button" class="nav-link nav-link--mobile" (click)="logout(); menuOpen = false">Logout</button>
@@ -30,10 +31,10 @@
 
       <div class="site-nav__actions">
         <ng-container *ngIf="(accountService.currentUser$ | async) as user; else guestActions">
-          <div class="user-chip" [title]="user.email">
+          <a routerLink="/account/profile" class="user-chip" [title]="user.email" (click)="menuOpen = false">
             <span class="user-chip__avatar">{{ user.displayName?.charAt(0) || 'U' }}</span>
             <span class="user-chip__name">{{ user.displayName || user.email }}</span>
-          </div>
+          </a>
           <button type="button" class="nav-btn nav-btn--ghost nav-btn--desktop" (click)="logout()">Logout</button>
         </ng-container>
         <ng-template #guestActions>
@@ -87,6 +88,7 @@
           <h3>Account</h3>
           <ng-container *ngIf="(accountService.currentUser$ | async) as user; else footerGuest">
             <span class="site-footer__muted">Signed in as {{ user.displayName || user.email }}</span>
+            <a routerLink="/account/profile">Profile</a>
             <button type="button" class="site-footer__linkbtn" (click)="logout()">Logout</button>
           </ng-container>
           <ng-template #footerGuest>

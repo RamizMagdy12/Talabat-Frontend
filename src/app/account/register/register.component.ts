@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
 export class RegisterComponent {
     accountService = inject(AccountService);
     router = inject(Router);
+    showPassword = false;
 
     registerForm = new FormGroup({
         displayName: new FormControl('', Validators.required),

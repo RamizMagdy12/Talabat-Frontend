@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { OrderService } from '../../core/services/order.service';
 import { BasketService } from '../../core/services/basket.service';
 import { PaymentService } from '../../core/services/payment.service';
+import { AccountService } from '../../account/account.service';
 import { IDeliveryMethod, IShippingAddress, IOrderToCreate } from '../../shared/models/order';
 import { environment } from '../../../environments/environment';
 import Swal from 'sweetalert2';
@@ -41,11 +42,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         city: '',
         country: ''
     };
+    addressFromProfile = false;
 
     constructor(
         private orderService: OrderService,
         public basketService: BasketService,
         private paymentService: PaymentService,
+        private accountService: AccountService,
         private router: Router,
         private ngZone: NgZone
     ) { }
@@ -59,6 +62,26 @@ export class CheckoutComponent implements OnInit, OnDestroy {
                 }
             },
             error: (err) => console.error('Failed to load delivery methods', err)
+        });
+
+        this.accountService.getProfile().subscribe({
+            next: (profile) => {
+                const saved = profile.address;
+                if (!saved) return;
+
+                const hasAddress = !!(saved.firstName || saved.lastName || saved.street || saved.city || saved.country);
+                if (!hasAddress) return;
+
+                this.address = {
+                    firstName: saved.firstName || '',
+                    lastName: saved.lastName || '',
+                    street: saved.street || '',
+                    city: saved.city || '',
+                    country: saved.country || ''
+                };
+                this.addressFromProfile = true;
+            },
+            error: (err) => console.error('Failed to load profile address', err)
         });
 
         // Initialize Stripe

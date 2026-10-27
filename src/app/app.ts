@@ -24,13 +24,17 @@ export class App implements OnInit {
     private router: Router
   ) {
     this.loadCurrentUser();
-    this.isAuthRoute = this.router.url.startsWith('/account');
+    this.isAuthRoute = this.isAuthOnlyRoute(this.router.url);
     this.router.events
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
       .subscribe(e => {
-        this.isAuthRoute = e.urlAfterRedirects.startsWith('/account');
+        this.isAuthRoute = this.isAuthOnlyRoute(e.urlAfterRedirects);
         this.menuOpen = false;
       });
+  }
+
+  private isAuthOnlyRoute(url: string): boolean {
+    return /\/account\/(login|register|forgot-password)(\?|$)/.test(url);
   }
 
   ngOnInit(): void {

@@ -9,6 +9,23 @@ export interface Address {
     lastName: string;
     street: string;
     city: string;
-    state: string;
-    zipcode: string;
+    state?: string;
+    zipcode?: string;
+    country?: string;
+}
+
+export interface Profile {
+    displayName: string;
+    email: string;
+    userName: string;
+    phoneNumber?: string | null;
+    address?: ProfileAddress | null;
+}
+
+export interface ProfileAddress {
+    firstName: string;
+    lastName: string;
+    street: string;
+    city: string;
+    country: string;
 }

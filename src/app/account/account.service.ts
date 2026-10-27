@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable, ReplaySubject, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User, Address } from '../shared/models/user';
+import { User, Address, Profile } from '../shared/models/user';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -82,6 +82,45 @@ export class AccountService {
 
     checkEmailExists(email: string) {
         return this.http.get<boolean>(this.baseUrl + 'account/emailexists?email=' + email);
+    }
+
+    forgotPassword(email: string) {
+        return this.http.post<{ message: string }>(this.baseUrl + 'account/forgotpassword', { email });
+    }
+
+    getProfile() {
+        return this.http.get<Profile>(this.baseUrl + 'account/profile');
+    }
+
+    updateProfile(profile: {
+        displayName: string;
+        phoneNumber?: string | null;
+        address?: {
+            firstName: string;
+            lastName: string;
+            street: string;
+            city: string;
+            country: string;
+        } | null;
+    }) {
+        return this.http.put<Profile>(this.baseUrl + 'account/profile', profile).pipe(
+            map(updated => {
+                const token = localStorage.getItem('token') || '';
+                this.currentUserSource.next({
+                    email: updated.email,
+                    displayName: updated.displayName,
+                    token
+                });
+                return updated;
+            })
+        );
+    }
+
+    changePassword(currentPassword: string, newPassword: string) {
+        return this.http.post<{ message: string }>(this.baseUrl + 'account/changepassword', {
+            currentPassword,
+            newPassword
+        });
     }
 
     getUserAddress() {

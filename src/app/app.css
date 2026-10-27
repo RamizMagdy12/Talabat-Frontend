@@ -120,6 +120,14 @@
   border-radius: 999px;
   background: #f0f3f8;
   max-width: 180px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.user-chip:hover {
+  background: #e7ebf3;
+  transform: translateY(-1px);
 }
 
 .user-chip__avatar {
