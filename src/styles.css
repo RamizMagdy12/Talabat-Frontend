@@ -20,6 +20,15 @@
   --font-body: "Manrope", "Segoe UI", sans-serif;
 }
 
+html[lang="ar"] {
+  --font-display: "Cairo", "Segoe UI", "Tahoma", sans-serif;
+  --font-body: "Cairo", "Segoe UI", "Tahoma", sans-serif;
+}
+
+html[dir="rtl"] body {
+  text-align: start;
+}
+
 *,
 *::before,
 *::after {

@@ -4,11 +4,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AccountService } from '../account.service';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
+import { TranslatePipe } from '../../core/i18n/translate.pipe';
 
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, RouterModule],
+    imports: [CommonModule, ReactiveFormsModule, RouterModule, TranslatePipe],
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })

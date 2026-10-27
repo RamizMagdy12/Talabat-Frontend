@@ -3,12 +3,14 @@ import { Router, RouterOutlet, RouterModule, NavigationEnd } from '@angular/rout
 import { CommonModule } from '@angular/common';
 import { BasketService } from './core/services/basket.service';
 import { AccountService } from './account/account.service';
+import { I18nService } from './core/i18n/i18n.service';
+import { TranslatePipe } from './core/i18n/translate.pipe';
 import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, CommonModule],
+  imports: [RouterOutlet, RouterModule, CommonModule, TranslatePipe],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -21,6 +23,7 @@ export class App implements OnInit {
   constructor(
     public basketService: BasketService,
     public accountService: AccountService,
+    public i18n: I18nService,
     private router: Router
   ) {
     this.loadCurrentUser();

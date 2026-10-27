@@ -105,6 +105,32 @@
   background: var(--brand-soft);
 }
 
+.lang-switch {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.lang-switch:hover {
+  border-color: color-mix(in srgb, var(--brand) 35%, var(--line));
+  color: var(--brand-deep);
+}
+
+.lang-switch--auth {
+  position: fixed;
+  top: 1rem;
+  inset-inline-end: 1rem;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.92);
+}
+
 .site-nav__actions {
   margin-left: auto;
   display: flex;

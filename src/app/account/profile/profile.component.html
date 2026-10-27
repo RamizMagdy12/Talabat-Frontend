@@ -1,83 +1,83 @@
 <section class="profile-page">
   <header class="profile-hero">
     <div>
-      <p class="shop-kicker">Your account</p>
-      <h1>Profile</h1>
-      <p class="profile-hero__sub">Update your details and change your password securely.</p>
+      <p class="shop-kicker">{{ 'footer.account' | t }}</p>
+      <h1>{{ 'profile.title' | t }}</h1>
+      <p class="profile-hero__sub">{{ 'profile.sub' | t }}</p>
     </div>
   </header>
 
-  <div class="profile-loading" *ngIf="isLoading">Loading profile…</div>
+  <div class="profile-loading" *ngIf="isLoading">{{ 'common.loading' | t }}</div>
 
   <div class="profile-grid" *ngIf="!isLoading">
     <form class="profile-card" [formGroup]="profileForm" (ngSubmit)="saveProfile()">
       <div class="profile-card__head">
-        <h2>Personal info</h2>
-        <p>Saved as your default details — checkout fills them automatically, and you can still change them per order.</p>
+        <h2>{{ 'profile.personal' | t }}</h2>
+        <p>{{ 'profile.personalSub' | t }}</p>
       </div>
 
       <div class="field-row">
         <label class="field">
-          <span>Display name</span>
+          <span>{{ 'profile.displayName' | t }}</span>
           <input type="text" formControlName="displayName" />
-          <small class="field-error" *ngIf="profileForm.get('displayName')?.touched && profileForm.get('displayName')?.invalid">Required</small>
+          <small class="field-error" *ngIf="profileForm.get('displayName')?.touched && profileForm.get('displayName')?.invalid">{{ 'common.required' | t }}</small>
         </label>
         <label class="field">
-          <span>Phone</span>
+          <span>{{ 'profile.phone' | t }}</span>
           <input type="text" formControlName="phoneNumber" placeholder="01xxxxxxxxx" />
         </label>
       </div>
 
       <div class="field-row">
         <label class="field">
-          <span>Email</span>
+          <span>{{ 'profile.email' | t }}</span>
           <input type="email" formControlName="email" />
         </label>
         <label class="field">
-          <span>Username</span>
+          <span>{{ 'profile.username' | t }}</span>
           <input type="text" formControlName="userName" />
         </label>
       </div>
 
-      <h3 class="profile-section-title">Address</h3>
+      <h3 class="profile-section-title">{{ 'profile.address' | t }}</h3>
       <div class="field-row">
         <label class="field">
-          <span>First name</span>
+          <span>{{ 'checkout.firstName' | t }}</span>
           <input type="text" formControlName="firstName" />
         </label>
         <label class="field">
-          <span>Last name</span>
+          <span>{{ 'checkout.lastName' | t }}</span>
           <input type="text" formControlName="lastName" />
         </label>
       </div>
       <label class="field">
-        <span>Street</span>
+        <span>{{ 'checkout.street' | t }}</span>
         <input type="text" formControlName="street" />
       </label>
       <div class="field-row">
         <label class="field">
-          <span>City</span>
+          <span>{{ 'checkout.city' | t }}</span>
           <input type="text" formControlName="city" />
         </label>
         <label class="field">
-          <span>Country</span>
+          <span>{{ 'checkout.country' | t }}</span>
           <input type="text" formControlName="country" />
         </label>
       </div>
 
       <button class="btn-solid" type="submit" [disabled]="profileForm.invalid || isSaving">
-        {{ isSaving ? 'Saving…' : 'Save profile' }}
+        {{ isSaving ? ('profile.saving' | t) : ('profile.save' | t) }}
       </button>
     </form>
 
     <form class="profile-card" [formGroup]="passwordForm" (ngSubmit)="changePassword()">
       <div class="profile-card__head">
-        <h2>Change password</h2>
-        <p>Use a strong password with upper, lower, number, and symbol.</p>
+        <h2>{{ 'profile.password' | t }}</h2>
+        <p>{{ 'profile.passwordSub' | t }}</p>
       </div>
 
       <label class="field">
-        <span>Current password</span>
+        <span>{{ 'profile.currentPassword' | t }}</span>
         <div class="password-box">
           <input [type]="showCurrentPassword ? 'text' : 'password'" formControlName="currentPassword" autocomplete="current-password" />
           <button type="button" class="password-toggle" (click)="showCurrentPassword = !showCurrentPassword" [attr.aria-label]="showCurrentPassword ? 'Hide password' : 'Show password'">
@@ -88,7 +88,7 @@
       </label>
 
       <label class="field">
-        <span>New password</span>
+        <span>{{ 'profile.newPassword' | t }}</span>
         <div class="password-box">
           <input [type]="showNewPassword ? 'text' : 'password'" formControlName="newPassword" autocomplete="new-password" />
           <button type="button" class="password-toggle" (click)="showNewPassword = !showNewPassword" [attr.aria-label]="showNewPassword ? 'Hide password' : 'Show password'">
@@ -102,7 +102,7 @@
       </label>
 
       <label class="field">
-        <span>Confirm new password</span>
+        <span>{{ 'profile.confirmPassword' | t }}</span>
         <div class="password-box">
           <input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmPassword" autocomplete="new-password" />
           <button type="button" class="password-toggle" (click)="showConfirmPassword = !showConfirmPassword" [attr.aria-label]="showConfirmPassword ? 'Hide password' : 'Show password'">
@@ -113,7 +113,7 @@
       </label>
 
       <button class="btn-solid" type="submit" [disabled]="passwordForm.invalid || isChangingPassword">
-        {{ isChangingPassword ? 'Updating…' : 'Update password' }}
+        {{ isChangingPassword ? ('profile.saving' | t) : ('profile.updatePassword' | t) }}
       </button>
     </form>
   </div>

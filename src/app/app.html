@@ -1,48 +1,56 @@
-<div class="app-shell" [class.app-shell--auth]="isAuthRoute">
+<div class="app-shell" [class.app-shell--auth]="isAuthRoute" [attr.dir]="i18n.dir">
+  <button *ngIf="isAuthRoute" type="button" class="lang-switch lang-switch--auth" [attr.aria-label]="'lang.switch' | t" (click)="i18n.toggleLang()">
+    {{ i18n.lang === 'ar' ? ('lang.en' | t) : ('lang.ar' | t) }}
+  </button>
+
   <header class="site-nav" *ngIf="!isAuthRoute">
     <div class="site-nav__inner">
-      <a routerLink="/" class="brand" aria-label="Talabat home" (click)="menuOpen = false">
+      <a routerLink="/" class="brand" [attr.aria-label]="('app.name' | t) + ' home'" (click)="menuOpen = false">
         <span class="brand__mark">T</span>
         <span class="brand__text">
-          <strong>Talabat</strong>
-          <small>Store</small>
+          <strong>{{ 'app.name' | t }}</strong>
+          <small>{{ 'app.store' | t }}</small>
         </span>
       </a>
 
-      <button type="button" class="nav-toggle" [attr.aria-expanded]="menuOpen" aria-label="Toggle menu" (click)="menuOpen = !menuOpen">
+      <button type="button" class="nav-toggle" [attr.aria-expanded]="menuOpen" [attr.aria-label]="'nav.menu' | t" (click)="menuOpen = !menuOpen">
         <span></span><span></span><span></span>
       </button>
 
       <nav class="site-nav__links" [class.is-open]="menuOpen" aria-label="Primary">
-        <a routerLink="/products" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="menuOpen = false">Shop</a>
-        <a routerLink="/products" fragment="offers" class="nav-link" (click)="menuOpen = false">Offers</a>
-        <a routerLink="/products" fragment="bestsellers" class="nav-link" (click)="menuOpen = false">Best sellers</a>
-        <a *ngIf="accountService.currentUser$ | async" routerLink="/orders" routerLinkActive="is-active" class="nav-link" (click)="menuOpen = false">Orders</a>
-        <a *ngIf="accountService.currentUser$ | async" routerLink="/account/profile" routerLinkActive="is-active" class="nav-link" (click)="menuOpen = false">Profile</a>
-        <a routerLink="/basket" routerLinkActive="is-active" class="nav-link nav-link--mobile" (click)="menuOpen = false">Basket</a>
+        <a routerLink="/products" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="menuOpen = false">{{ 'nav.shop' | t }}</a>
+        <a routerLink="/products" fragment="offers" class="nav-link" (click)="menuOpen = false">{{ 'nav.offers' | t }}</a>
+        <a routerLink="/products" fragment="bestsellers" class="nav-link" (click)="menuOpen = false">{{ 'nav.bestsellers' | t }}</a>
+        <a *ngIf="accountService.currentUser$ | async" routerLink="/orders" routerLinkActive="is-active" class="nav-link" (click)="menuOpen = false">{{ 'nav.orders' | t }}</a>
+        <a *ngIf="accountService.currentUser$ | async" routerLink="/account/profile" routerLinkActive="is-active" class="nav-link" (click)="menuOpen = false">{{ 'nav.profile' | t }}</a>
+        <a routerLink="/basket" routerLinkActive="is-active" class="nav-link nav-link--mobile" (click)="menuOpen = false">{{ 'nav.basket' | t }}</a>
         <ng-container *ngIf="(accountService.currentUser$ | async) as user; else guestMobile">
-          <button type="button" class="nav-link nav-link--mobile" (click)="logout(); menuOpen = false">Logout</button>
+          <button type="button" class="nav-link nav-link--mobile" (click)="logout(); menuOpen = false">{{ 'nav.logout' | t }}</button>
         </ng-container>
         <ng-template #guestMobile>
-          <a routerLink="/account/login" class="nav-link nav-link--mobile" (click)="menuOpen = false">Sign in</a>
-          <a routerLink="/account/register" class="nav-link nav-link--mobile" (click)="menuOpen = false">Join</a>
+          <a routerLink="/account/login" class="nav-link nav-link--mobile" (click)="menuOpen = false">{{ 'nav.login' | t }}</a>
+          <a routerLink="/account/register" class="nav-link nav-link--mobile" (click)="menuOpen = false">{{ 'nav.join' | t }}</a>
         </ng-template>
       </nav>
 
       <div class="site-nav__actions">
+        <button type="button" class="lang-switch" [attr.aria-label]="'lang.switch' | t" (click)="i18n.toggleLang()">
+          {{ i18n.lang === 'ar' ? ('lang.en' | t) : ('lang.ar' | t) }}
+        </button>
+
         <ng-container *ngIf="(accountService.currentUser$ | async) as user; else guestActions">
           <a routerLink="/account/profile" class="user-chip" [title]="user.email" (click)="menuOpen = false">
             <span class="user-chip__avatar">{{ user.displayName?.charAt(0) || 'U' }}</span>
             <span class="user-chip__name">{{ user.displayName || user.email }}</span>
           </a>
-          <button type="button" class="nav-btn nav-btn--ghost nav-btn--desktop" (click)="logout()">Logout</button>
+          <button type="button" class="nav-btn nav-btn--ghost nav-btn--desktop" (click)="logout()">{{ 'nav.logout' | t }}</button>
         </ng-container>
         <ng-template #guestActions>
-          <a routerLink="/account/login" class="nav-btn nav-btn--ghost nav-btn--desktop">Sign in</a>
-          <a routerLink="/account/register" class="nav-btn nav-btn--solid nav-btn--desktop">Join</a>
+          <a routerLink="/account/login" class="nav-btn nav-btn--ghost nav-btn--desktop">{{ 'nav.login' | t }}</a>
+          <a routerLink="/account/register" class="nav-btn nav-btn--solid nav-btn--desktop">{{ 'nav.join' | t }}</a>
         </ng-template>
 
-        <a routerLink="/basket" class="nav-cart" aria-label="Basket" (click)="menuOpen = false">
+        <a routerLink="/basket" class="nav-cart" [attr.aria-label]="'nav.basket' | t" (click)="menuOpen = false">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="9" cy="21" r="1"></circle>
             <circle cx="20" cy="21" r="1"></circle>
@@ -65,48 +73,48 @@
   <footer class="site-footer" *ngIf="!isAuthRoute">
     <div class="site-footer__inner">
       <div class="site-footer__brand">
-        <a routerLink="/" class="brand" aria-label="Talabat home">
+        <a routerLink="/" class="brand" [attr.aria-label]="('app.name' | t) + ' home'">
           <span class="brand__mark">T</span>
           <span class="brand__text">
-            <strong>Talabat</strong>
-            <small>Store</small>
+            <strong>{{ 'app.name' | t }}</strong>
+            <small>{{ 'app.store' | t }}</small>
           </span>
         </a>
-        <p>Fresh picks, fast delivery, and a checkout that stays out of your way.</p>
+        <p>{{ 'footer.blurb' | t }}</p>
       </div>
 
       <div class="site-footer__cols">
         <div class="site-footer__col">
-          <h3>Explore</h3>
-          <a routerLink="/products">Shop</a>
-          <a routerLink="/products" fragment="offers">Offers</a>
-          <a routerLink="/products" fragment="bestsellers">Best sellers</a>
-          <a routerLink="/basket">Basket</a>
-          <a *ngIf="accountService.currentUser$ | async" routerLink="/orders">Orders</a>
+          <h3>{{ 'footer.explore' | t }}</h3>
+          <a routerLink="/products">{{ 'nav.shop' | t }}</a>
+          <a routerLink="/products" fragment="offers">{{ 'nav.offers' | t }}</a>
+          <a routerLink="/products" fragment="bestsellers">{{ 'nav.bestsellers' | t }}</a>
+          <a routerLink="/basket">{{ 'nav.basket' | t }}</a>
+          <a *ngIf="accountService.currentUser$ | async" routerLink="/orders">{{ 'nav.orders' | t }}</a>
         </div>
         <div class="site-footer__col">
-          <h3>Account</h3>
+          <h3>{{ 'footer.account' | t }}</h3>
           <ng-container *ngIf="(accountService.currentUser$ | async) as user; else footerGuest">
-            <span class="site-footer__muted">Signed in as {{ user.displayName || user.email }}</span>
-            <a routerLink="/account/profile">Profile</a>
-            <button type="button" class="site-footer__linkbtn" (click)="logout()">Logout</button>
+            <span class="site-footer__muted">{{ 'footer.signedInAs' | t:{ name: (user.displayName || user.email) } }}</span>
+            <a routerLink="/account/profile">{{ 'nav.profile' | t }}</a>
+            <button type="button" class="site-footer__linkbtn" (click)="logout()">{{ 'nav.logout' | t }}</button>
           </ng-container>
           <ng-template #footerGuest>
-            <a routerLink="/account/login">Sign in</a>
-            <a routerLink="/account/register">Create account</a>
+            <a routerLink="/account/login">{{ 'nav.login' | t }}</a>
+            <a routerLink="/account/register">{{ 'footer.createAccount' | t }}</a>
           </ng-template>
         </div>
         <div class="site-footer__col">
-          <h3>Support</h3>
-          <span class="site-footer__muted">Care · 24/7</span>
+          <h3>{{ 'footer.support' | t }}</h3>
+          <span class="site-footer__muted">{{ 'footer.care' | t }}</span>
           <a href="mailto:support@talabat.local">support@talabat.local</a>
         </div>
       </div>
     </div>
 
     <div class="site-footer__bar">
-      <span>© {{ currentYear }} Talabat Store. All rights reserved.</span>
-      <span>Built for speed · Delivered with care</span>
+      <span>{{ 'footer.rights' | t:{ year: currentYear } }}</span>
+      <span>{{ 'footer.built' | t }}</span>
     </div>
   </footer>
 </div>

@@ -8,11 +8,12 @@ import { Product, productDisplayPrice } from '../shared/models/product';
 import { Brand } from '../shared/models/brand';
 import { Category } from '../shared/models/category';
 import { ShopParams } from '../shared/models/shopParams';
+import { TranslatePipe } from '../core/i18n/translate.pipe';
 
 @Component({
     selector: 'app-product-list',
     standalone: true,
-    imports: [CommonModule, RouterModule, FormsModule],
+    imports: [CommonModule, RouterModule, FormsModule, TranslatePipe],
     templateUrl: './product-list.component.html',
     styleUrls: ['./product-list.component.css']
 })
