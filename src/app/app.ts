@@ -42,7 +42,7 @@ export class App implements OnInit {
   }
 
   private isAuthOnlyRoute(url: string): boolean {
-    return /\/account\/(login|register|forgot-password)(\?|$)/.test(url);
+    return /\/account\/(login|register|forgot-password|confirm-email)(\?|$)/.test(url);
   }
 
   ngOnInit(): void {

@@ -1,0 +1,29 @@
+.confirm-card {
+  max-width: 420px;
+  margin: 4rem auto;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #e4e8ef;
+}
+
+.confirm-spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 1rem;
+  border: 3px solid #e5e7eb;
+  border-top-color: #ff4d00;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.confirm-link {
+  display: inline-flex;
+  margin-top: 1.25rem;
+  text-decoration: none;
+}

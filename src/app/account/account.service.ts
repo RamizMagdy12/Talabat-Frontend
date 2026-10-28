@@ -64,14 +64,15 @@ export class AccountService {
     }
 
     register(values: any) {
-        return this.http.post<User>(this.baseUrl + 'account/register', values).pipe(
-            map(user => {
-                if (user) {
-                    localStorage.setItem('token', user.token);
-                    this.currentUserSource.next(user);
-                }
-            })
-        );
+        return this.http.post<{ message: string }>(this.baseUrl + 'account/register', values);
+    }
+
+    confirmEmail(userId: string, token: string) {
+        return this.http.post<{ message: string }>(this.baseUrl + 'account/confirmemail', { userId, token });
+    }
+
+    resendConfirmation(email: string) {
+        return this.http.post<{ message: string }>(this.baseUrl + 'account/resendconfirmation', { email });
     }
 
     logout() {

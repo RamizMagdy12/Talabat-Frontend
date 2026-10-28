@@ -39,25 +39,18 @@ export class RegisterComponent {
             next: () => {
                 Swal.fire({
                     icon: 'success',
-                    title: this.i18n.t('register.msg.success'),
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true
-                });
-                this.router.navigateByUrl('/products');
+                    title: this.i18n.t('register.msg.checkEmailTitle'),
+                    text: this.i18n.t('register.msg.checkEmailText'),
+                    confirmButtonText: this.i18n.t('common.ok')
+                }).then(() => this.router.navigateByUrl('/account/login'));
             },
-           error: (error) => {
-    console.log('Full error:', error); // ✅ شوف الـ console
-    console.log('Errors:', error.error?.errors);
-    
-    Swal.fire({
-        icon: 'error',
-        title: this.i18n.t('register.msg.failed'),
-        text: error.error?.errors?.join(', ') || error.error?.message || this.i18n.t('common.error')
-    });
-}
+            error: (error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: this.i18n.t('register.msg.failed'),
+                    text: error.error?.errors?.join(', ') || error.error?.message || this.i18n.t('common.error')
+                });
+            }
         });
     }
 

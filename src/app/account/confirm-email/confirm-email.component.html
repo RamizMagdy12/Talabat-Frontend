@@ -1,0 +1,10 @@
+<section class="auth-stage">
+  <div class="auth-orb auth-orb--a" aria-hidden="true"></div>
+  <div class="auth-orb auth-orb--b" aria-hidden="true"></div>
+  <div class="auth-card confirm-card panel-in">
+    <div class="confirm-spinner" *ngIf="loading"></div>
+    <h2>{{ (loading ? 'confirmEmail.processing' : (succeeded ? 'confirmEmail.successTitle' : 'confirmEmail.failedTitle')) | t }}</h2>
+    <p>{{ messageKey | t }}</p>
+    <a *ngIf="!loading" routerLink="/account/login" class="auth-submit confirm-link">{{ 'confirmEmail.goLogin' | t }}</a>
+  </div>
+</section>
