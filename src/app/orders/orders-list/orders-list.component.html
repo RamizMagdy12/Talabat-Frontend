@@ -35,7 +35,7 @@
       <div class="order-card__top">
         <div class="order-id">
           <span class="order-hash">{{ 'orders.orderLabel' | t }}</span>
-          <strong>#{{ order.id }}</strong>
+          <strong>{{ order.orderNumber || ('#' + order.id) }}</strong>
         </div>
         <span class="status-badge" [ngClass]="getStatusClass(order.status)">
           {{ getStatusText(order.status) }}

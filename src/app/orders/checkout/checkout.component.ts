@@ -328,7 +328,7 @@ private createPaymentIntent(): void {
                 Swal.fire({
                     icon: 'success',
                     title: this.i18n.t('checkout.msg.paymentSuccessTitle'),
-                    html: `<p>${this.i18n.t('checkout.msg.orderPlaced', { id: createdOrder.id })}</p>`,
+                    html: `<p>${this.i18n.t('checkout.msg.orderPlaced', { id: createdOrder.orderNumber || createdOrder.id })}</p>`,
                     confirmButtonText: this.i18n.t('checkout.msg.viewOrders')
                 }).then(() => this.router.navigateByUrl('/orders'));
             },

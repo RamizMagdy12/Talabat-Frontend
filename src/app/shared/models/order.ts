@@ -1,5 +1,6 @@
 export interface IOrder {
     id: number;
+    orderNumber: string;
     buyerEmail: string;
     orderDate: string;
     status: number;

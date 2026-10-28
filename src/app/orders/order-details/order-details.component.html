@@ -17,7 +17,7 @@
         <div class="order-header-left">
 
             <div class="order-number">
-                <span class="order-hash">#</span>{{order.id}}
+                {{ order.orderNumber || ('#' + order.id) }}
             </div>
 
             <span class="status-badge"
