@@ -25,6 +25,92 @@ Talabat 2026 is a food / retail style store with:
 - Admin MVC dashboard (inventory ledger, orders, finance, users)
 - Shared AR/EN resource files for the store and the admin panel
 
+### Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/01-login.png" alt="Login" width="720" />
+</p>
+
+**Login**
+
+<p align="center">
+  <img src="docs/screenshots/02-shop-home.png" alt="Shop home" width="720" />
+</p>
+
+**Shop home**
+
+<p align="center">
+  <img src="docs/screenshots/03-offers.png" alt="Active offers" width="720" />
+</p>
+
+**Active offers**
+
+<p align="center">
+  <img src="docs/screenshots/04-bestsellers.png" alt="Best sellers" width="720" />
+</p>
+
+**Best sellers**
+
+<p align="center">
+  <img src="docs/screenshots/05-basket.png" alt="Basket" width="720" />
+</p>
+
+**Basket**
+
+<p align="center">
+  <img src="docs/screenshots/06-checkout-shipping.png" alt="Checkout shipping" width="720" />
+</p>
+
+**Checkout — shipping address**
+
+<p align="center">
+  <img src="docs/screenshots/07-checkout-delivery.png" alt="Checkout delivery" width="720" />
+</p>
+
+**Checkout — delivery method**
+
+<p align="center">
+  <img src="docs/screenshots/08-checkout-payment.png" alt="Checkout payment" width="720" />
+</p>
+
+**Checkout — Stripe payment**
+
+<p align="center">
+  <img src="docs/screenshots/09-checkout-review.png" alt="Checkout review" width="720" />
+</p>
+
+**Checkout — review & place order**
+
+<p align="center">
+  <img src="docs/screenshots/10-payment-success.png" alt="Payment success" width="720" />
+</p>
+
+**Payment success (`TLB-…` order number)**
+
+<p align="center">
+  <img src="docs/screenshots/11-orders.png" alt="My orders" width="720" />
+</p>
+
+**My orders**
+
+<p align="center">
+  <img src="docs/screenshots/12-profile.png" alt="Profile" width="720" />
+</p>
+
+**Profile**
+
+<p align="center">
+  <img src="docs/screenshots/13-email-activation.png" alt="Activation email" width="720" />
+</p>
+
+**Account activation email**
+
+<p align="center">
+  <img src="docs/screenshots/14-email-order-confirmed.png" alt="Order confirmation email" width="720" />
+</p>
+
+**Order confirmation email**
+
 ### Tech stack
 
 | Area | Technology |
@@ -247,6 +333,92 @@ Part of the Talabat e-commerce portfolio. All rights reserved.
 - دفع ببطاقة عبر Stripe (PaymentIntent + Webhook)
 - لوحة أدمن MVC (جرد المخزون، الطلبات، المالية، المستخدمون)
 - واجهة ثنائية اللغة عربي / إنجليزي للمتجر ولوحة التحكم
+
+### لقطات الشاشة
+
+<p align="center">
+  <img src="docs/screenshots/01-login.png" alt="تسجيل الدخول" width="720" />
+</p>
+
+**تسجيل الدخول**
+
+<p align="center">
+  <img src="docs/screenshots/02-shop-home.png" alt="الصفحة الرئيسية للمتجر" width="720" />
+</p>
+
+**الصفحة الرئيسية للمتجر**
+
+<p align="center">
+  <img src="docs/screenshots/03-offers.png" alt="العروض" width="720" />
+</p>
+
+**العروض النشطة**
+
+<p align="center">
+  <img src="docs/screenshots/04-bestsellers.png" alt="الأكثر مبيعًا" width="720" />
+</p>
+
+**الأكثر مبيعًا**
+
+<p align="center">
+  <img src="docs/screenshots/05-basket.png" alt="السلة" width="720" />
+</p>
+
+**السلة**
+
+<p align="center">
+  <img src="docs/screenshots/06-checkout-shipping.png" alt="عنوان الشحن" width="720" />
+</p>
+
+**إتمام الشراء — عنوان الشحن**
+
+<p align="center">
+  <img src="docs/screenshots/07-checkout-delivery.png" alt="طريقة التوصيل" width="720" />
+</p>
+
+**إتمام الشراء — طريقة التوصيل**
+
+<p align="center">
+  <img src="docs/screenshots/08-checkout-payment.png" alt="الدفع" width="720" />
+</p>
+
+**إتمام الشراء — الدفع عبر Stripe**
+
+<p align="center">
+  <img src="docs/screenshots/09-checkout-review.png" alt="مراجعة الطلب" width="720" />
+</p>
+
+**إتمام الشراء — المراجعة**
+
+<p align="center">
+  <img src="docs/screenshots/10-payment-success.png" alt="نجاح الدفع" width="720" />
+</p>
+
+**نجاح الدفع (رقم الطلب `TLB-…`)**
+
+<p align="center">
+  <img src="docs/screenshots/11-orders.png" alt="طلباتي" width="720" />
+</p>
+
+**طلباتي**
+
+<p align="center">
+  <img src="docs/screenshots/12-profile.png" alt="الملف الشخصي" width="720" />
+</p>
+
+**الملف الشخصي**
+
+<p align="center">
+  <img src="docs/screenshots/13-email-activation.png" alt="إيميل التفعيل" width="720" />
+</p>
+
+**إيميل تفعيل الحساب**
+
+<p align="center">
+  <img src="docs/screenshots/14-email-order-confirmed.png" alt="إيميل تأكيد الطلب" width="720" />
+</p>
+
+**إيميل تأكيد الطلب**
 
 ### التقنيات
 
